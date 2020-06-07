@@ -1,0 +1,12 @@
+.idea
+favicon.ico
+static
+index.html
+manifest.json
+logo192.png
+logo512.png
+build
+asset-manifest.json
+service-worker.js
+precache-manifest.*.js
+node_modules
