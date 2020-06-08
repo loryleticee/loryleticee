@@ -9,9 +9,16 @@
   height: 100vh;
   display: flex;
 
-    .cv{
-        font-weight: 80 bold;
-        font-size: large;
+    .container{
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      margin:2rem;
+
+      p{
+        font-style: italic;
+        color:#fff;
+      }
     }
 }
 
