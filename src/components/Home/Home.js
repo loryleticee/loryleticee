@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
+        <script src="https://use.fontawesome.com/f8f0464e24.js"></script>        <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
         <meta charSet='utf-8' />
         <meta name='description' content='Lory LETICEE official website' />
         <meta property='og:site_name' content='Lory LETICEE' />
@@ -30,8 +30,14 @@ const Home = () => {
         <link rel='canonical' href='http://www.loryleticee.com' />
       </Helmet>
       <div className='container'>
+          <span className='skills'>
+            <p>FRONTEND  <i class="fa fa-star-half" aria-hidden="false"></i> </p>
+            <p>BACKEND  <i class="fa fa-star" aria-hidden="true"></i> </p>
+          </span>
+      </div>
+      <div className='footer'>
         <div>
-          <p>M. LORY LETICEE</p>
+          <p><i class="fa fa-user-circle" aria-hidden="true"></i> M. LORY LETICEE</p>
           <p>Full-stack Developer Junior</p>
         </div>
       </div>
