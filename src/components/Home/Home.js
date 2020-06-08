@@ -30,7 +30,7 @@ const Home = () => {
         <title>Lory LETICEE</title>
         <link rel='canonical' href='https://www.loryleticee.com' />
       </Helmet>
-      <div className='cv'><a href='https://www.doyoubuzz.com/lory-leticee' alt='cv' dangerouslySetInnerHTML={{ __html: 'Curriculum Viate' }}></a> </div>
+      {/*<div className='cv'><a href='https://www.doyoubuzz.com/lory-leticee' alt='cv' dangerouslySetInnerHTML={{ __html: 'Curriculum Viate' }}></a> </div>*/}
     </>
   )
 }
