@@ -32,7 +32,7 @@ const Home = () => {
       <div className='container'>
         <div>
           <p>M. LORY LETICEE</p>
-          <p>Full-stack Developper Junior</p>
+          <p>Full-stack Developer Junior</p>
         </div>
       </div>
     </>
