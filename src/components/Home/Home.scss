@@ -9,17 +9,36 @@
   height: 100vh;
   display: flex;
 
-    .container{
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      margin:2rem;
+ .container-head{
+  height: 10vh;
 
-      p{
-        font-style: italic;
-        color:#fff;
-      }
+  }
+
+  p{
+    font-style: italic;
+    color:#fff;
+  }
+
+  .container{
+    //height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin:2rem;
+
+    .skills{
+      display: flex;
+      flex-direction: column;
     }
+  }
+
+  .footer{
+    //height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin:2rem;
+  }
 }
 
 @media (min-width: 768px){
