@@ -34,7 +34,10 @@ $primaryColor:#fff;
     margin:2rem;
   }
   .extras{
-    color:$primaryColor;
+    i,a{
+      color:$primaryColor;
+    }
+    
     display: flex;
     justify-content: center;
     align-items: flex-end;
