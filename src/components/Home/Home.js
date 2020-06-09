@@ -42,7 +42,7 @@ const Home = () => {
         </div>
       </div>
       <div class='extras'>
-       <i class="fa fa-address-card-o" aria-hidden="true"> <a href="mailto:booking@labmediaground.com?subject=Wellkom from our Website,I got you Guys">.</a></i>
+       <i class="fa fa-address-card-o" aria-hidden="true"> <a href="mailto:booking@labmediaground.com?subject=Wellkom from our Website,I got you Guys">Courriel</a></i>
       </div>
     </>
   )
