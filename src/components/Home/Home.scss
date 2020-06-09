@@ -1,3 +1,5 @@
+$primaryColor:#fff;
+
 .nopage{
   display: flex;
   justify-content: center;
@@ -9,21 +11,14 @@
   height: 100vh;
   display: flex;
 
- .container-head{
-  height: 10vh;
-
-  }
-
   p{
     font-style: italic;
-    color:#fff;
+    color:$primaryColor;
   }
 
   .container{
-    //height: 80vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     margin:2rem;
 
     .skills{
@@ -32,12 +27,18 @@
     }
   }
 
-  .footer{
-    //height: 10vh;
+  .container-head{
     display: flex;
     justify-content: center;
     align-items: flex-end;
     margin:2rem;
+  }
+  .extras{
+    color:$primaryColor;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin:1rem;
   }
 }
 
