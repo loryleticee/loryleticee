@@ -1,3 +1,4 @@
+public
 .idea
 favicon.ico
 static
@@ -9,3 +10,4 @@ asset-manifest.json
 service-worker.js
 precache-manifest.*.js
 node_modules
+.env-*
