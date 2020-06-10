@@ -1,6 +1,6 @@
 import React from 'react'
 import './Home.scss'
-import logo from '../../images/loryleticee.png'
+import logo from '../../logo.svg'
 
 import { Helmet } from 'react-helmet'
 
@@ -26,7 +26,6 @@ const Home = () => {
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:description' content='The official website of Lory LÉTICÉE.' />
         <meta name='description' content='The official website of Lory LÉTICÉE.' />
-        <title>Lory LÉTICÉE</title>
         <link rel='canonical' href='http://www.loryleticee.com' />
       </Helmet>
       <div className='container'>
