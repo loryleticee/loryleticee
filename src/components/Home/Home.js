@@ -42,7 +42,7 @@ const Home = () => {
         </div>
       </div>
       <div class='extras'>
-        <a href="https://www.ayrlomusic.com"><i class="fab fa-adn"></i></a>
+        <a href="https://www.ayrlomusic.com" target='_blank' rel='noopener noreferrer'><i class="fab fa-adn"></i></a>
       </div>
     </>
   )
