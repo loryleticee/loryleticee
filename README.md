@@ -9,7 +9,4 @@ Mis en oeuvre
 - Auto Scaling
 
 
-PROCHAINE EVOLUTION
-- Connect with a S3 Bucket
-
 Hébergé grace à https://aws.amazon.com 
