@@ -51,7 +51,7 @@ export default function HeaderLinks(props) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
-          href="https://www.loryleticee.fr/img/cv/CV-lory-leticee.pdf"
+          href="https://www.loryleticee.fr/api/"
           color="transparent"
           target="_blank"
           className={classes.navLink}
