@@ -1,5 +1,5 @@
 const http = require('http');
-const url = require(' ');
+const url = require('url');
 const path = require('path')
 var fs = require("fs");
 var cors = require('cors');
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
 app.get('/api/cv', function (req, res, next) {
-  let datas = fs.readdirSync("src/asset/img/cv");
+  let datas = fs.readdirSync(__dirname+"/src/assets/img/cv");
   let files = []
   for (var file of datas) {
     let name = file.split('.');
@@ -23,7 +23,7 @@ app.get('/api/cv', function (req, res, next) {
   }
   res.setHeader('Content-disposition', 'attachment; filename=CV-lory-leticee.pdf');
   res.setHeader('Content-type', 'application/pdf');
-  res.download(path.join(__dirname, "src/asset/img/cv/CV-lory-leticee.pdf"));
+  res.download(path.join(__dirname, "/src/assets/img/cv/CV-lory-leticee.pdf"));
 })
 
 // app.get('/file/:template', function (req, res, next) {
