@@ -21,7 +21,9 @@ app.get('/api/cv', function (req, res, next) {
     if(name[1] === 'pdf')
       files.push([name[0], name[0]])
   }
-  res.sendFile(path.join(__dirname, "src/asset/img/cv/CV-lory-leticee.pdf"))
+  res.setHeader('Content-disposition', 'attachment; filename=CV-lory-leticee.pdf');
+  res.setHeader('Content-type', 'application/pdf');
+  res.download(path.join(__dirname, "src/asset/img/cv/CV-lory-leticee.pdf"));
 })
 
 // app.get('/file/:template', function (req, res, next) {
