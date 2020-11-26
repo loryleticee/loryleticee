@@ -30,7 +30,7 @@ export default function SectionLogin() {
             <Card>
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
-                  <h4>Login</h4>
+                  <h4>Join Him</h4>
                   <div className={classes.socialLine}>
                     <Button
                       justIcon
@@ -95,24 +95,6 @@ export default function SectionLogin() {
                           <Email className={classes.inputIconsColor} />
                         </InputAdornment>
                       )
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Password"
-                    id="pass"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "password",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Icon className={classes.inputIconsColor}>
-                            lock_outline
-                          </Icon>
-                        </InputAdornment>
-                      ),
-                      autoComplete: "off"
                     }}
                   />
                 </CardBody>
