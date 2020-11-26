@@ -30,11 +30,11 @@ export default function SectionLogin() {
             <Card>
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
-                  <h4>Join Him</h4>
+                  <h4>Contact Him</h4>
                   <div className={classes.socialLine}>
                     <Button
                       justIcon
-                      href="#pablo"
+                      href="https://twitter.com/loryleticee/"
                       target="_blank"
                       color="transparent"
                       onClick={e => e.preventDefault()}
@@ -43,25 +43,12 @@ export default function SectionLogin() {
                     </Button>
                     <Button
                       justIcon
-                      href="#pablo"
+                      href="http://facebook.com/loryleticee"
                       target="_blank"
                       color="transparent"
                       onClick={e => e.preventDefault()}
                     >
                       <i className={classes.socialIcons + " fab fa-facebook"} />
-                    </Button>
-                    <Button
-                      justIcon
-                      href="#pablo"
-                      target="_blank"
-                      color="transparent"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <i
-                        className={
-                          classes.socialIcons + " fab fa-google-plus-g"
-                        }
-                      />
                     </Button>
                   </div>
                 </CardHeader>

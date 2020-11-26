@@ -38,7 +38,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Material Kit React"
+        branding="LORY LÉTICÉE"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -53,7 +53,7 @@ export default function Components(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>LORY LÉTICÉÉ.</h1>
+                <h1 className={classes.title}>LORY LÉTICÉE.</h1>
                 <h3 className={classes.subtitle}>
                   A Badass experience from West Indies.
                 </h3>
@@ -77,7 +77,7 @@ export default function Components(props) {
         <GridItem md={12} className={classes.textCenter}>
           <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>
-              View Login Page
+              View Contact Page
             </Button>
           </Link>
         </GridItem>
