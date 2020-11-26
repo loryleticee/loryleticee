@@ -26,11 +26,11 @@ export default function HeaderLinks(props) {
   const classes = useStyles();
 
   const downloadCv = () => {
-    fetch("https://www.loryleticee.fr/api/cv/")
+    fetch("https://www.loryleticee.fr:4000/api/cv")
       .then(res => res.json())
       .then(
         (result) => {
-          console.log('TEST :', result.items)
+          console.log('Vousus :', result.items)
         },
         // Remarque : il est important de traiter les erreurs ici
         // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
@@ -72,7 +72,7 @@ export default function HeaderLinks(props) {
           color="transparent"
           target="_blank"
           className={classes.navLink}
-          onClick = {downloadCv}
+          onClick={downloadCv}
         >
           <CloudDownload className={classes.icons} /> Download
         </Button>
