@@ -9,8 +9,8 @@ var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 require('dotenv').config()
 
-const hostname = '0.0.0.0';
-const port = 4000;
+const hostname = 'https://api.leticeelory.fr';
+const port = 80;
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
