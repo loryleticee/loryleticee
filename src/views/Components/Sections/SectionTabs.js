@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 import Face from "@material-ui/icons/Face";
-import Chat from "@material-ui/icons/Chat";
+import Apple from "@material-ui/icons/Apple";
 import Build from "@material-ui/icons/Build";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -21,11 +21,11 @@ export default function SectionTabs() {
     <div className={classes.section}>
       <div className={classes.container}>
         <div id="nav-tabs">
-          <h3>Navigation Tabs</h3>
+          <h3>About...</h3>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
               <h3>
-                <small>Tabs with Icons on Card</small>
+                <small>Technological position</small>
               </h3>
               <CustomTabs
                 headerColor="primary"
@@ -47,8 +47,8 @@ export default function SectionTabs() {
                     )
                   },
                   {
-                    tabName: "Messages",
-                    tabIcon: Chat,
+                    tabName: "vs The Others",
+                    tabIcon: Apple,
                     tabContent: (
                       <p className={classes.textCenter}>
                         I think that’s a responsibility that I have, to push
@@ -83,7 +83,7 @@ export default function SectionTabs() {
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
               <h3>
-                <small>Tabs on Plain Card</small>
+                <small>State of Mind</small>
               </h3>
               <CustomTabs
                 plainTabs

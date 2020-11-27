@@ -40,10 +40,7 @@ export default function SectionDownload() {
           <Button color="facebook">
             <i className={classes.socials + " fab fa-facebook-square"} /> Share
           </Button>
-          <Button color="google">
-            <i className={classes.socials + " fab fa-google-plus-g"} />
-            Share
-          </Button>
+          
           <Button color="github">
             <i className={classes.socials + " fab fa-github"} /> Star
           </Button>
