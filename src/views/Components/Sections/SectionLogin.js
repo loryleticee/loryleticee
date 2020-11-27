@@ -92,7 +92,6 @@ export default function SectionLogin() {
                     label='Message'
                     multiline
                     rows={4}
-                    autoFocus
                     fullWidth
                     margin='dense'
                     required
