@@ -1,10 +1,13 @@
-const http = require('http');
-const url = require('url');
+require('dotenv').config()
+//const http = require('http');
+//const url = require('url');
 const path = require('path')
 var fs = require("fs");
 var cors = require('cors');
 var express = require('express');
 var bodyParser = require('body-parser');
+var nodemailer = require('nodemailer');
+require('dotenv').config()
 
 const hostname = '0.0.0.0';
 const port = 4000;
@@ -21,10 +24,41 @@ app.get('/', function (req, res, next) {
     if(name[1] === 'pdf')
       files.push([name[0], name[0]])
   }
-  res.setHeader('Content-disposition', 'attachment; filename=CV-lory-leticee.pdf');
-  res.setHeader('Content-type', 'application/pdf');
-  res.download(path.join(__dirname, "/src/assets/img/cv/CV-lory-leticee.pdf"));
+
+  const filePath = "/src/assets/img/cv/CV-lory-leticee.pdf";
+  fs.readFile(__dirname + filePath , function (err,data){
+    res.contentType("application/pdf");
+    res.send(data);
+   });
 })
+
+
+app.get('/mail', function (req, res, next) {
+  var transporter = nodemailer.createTransport({
+    service: process.env.MAIL_SERVICE,
+    auth: {
+      user: process.env.MAIL_FROM,
+      pass: process.env.MAIL_PSWD
+    }
+  });
+  
+  var mailOptions = {
+    from: process.env.MAIL_FROM,
+    to: process.env.MAIL_TO,
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+      window.close();
+    }
+  });
+})
+
 
 // app.get('/file/:template', function (req, res, next) {
 //   let title = req.params.template.toLowerCase()

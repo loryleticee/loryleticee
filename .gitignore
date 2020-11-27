@@ -11,3 +11,4 @@ build
 #precache-manifest.*.js
 node_modules
 .env-*
+.env

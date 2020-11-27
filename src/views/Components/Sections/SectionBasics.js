@@ -69,6 +69,12 @@ export default function SectionBasics() {
               <Button color="info">DOCKER</Button>
               <Button color="success">BASH</Button>
               <Button color="warning">MACOS</Button>
+              <Button color="rose">VSCODE</Button>
+              <Button>PHPSTORM</Button>
+              <br/>
+              <Button size="sm"  color="info" round>PRO TOOLS</Button>
+              <Button size="sm" color="primary" round> <Favorite className={classes.icons} /> ABLETON</Button>
+              <Button size="sm" color="rose" round>LOGIC PRO</Button>
             </GridItem>
           </GridContainer>
         </div>
