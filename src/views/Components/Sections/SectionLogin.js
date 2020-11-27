@@ -15,6 +15,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import TextField from '@material-ui/core/TextField'
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 
@@ -84,6 +85,25 @@ export default function SectionLogin() {
                       )
                     }}
                   />
+                  <TextField
+                    aria-label='minimum height'
+                    placeholder='Message ...'
+                    variant='outlined'
+                    label='Message'
+                    multiline
+                    rows={4}
+                    autoFocus
+                    fullWidth
+                    margin='dense'
+                    required
+                    name='Message'
+                    type='textarea'
+                    id='message'
+                    
+                    autoComplete='current-message'
+                    
+                    error=''
+                />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
                   <Button simple color="primary" size="lg">
