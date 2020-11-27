@@ -23,25 +23,7 @@ import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
-  const classes = useStyles();
-
-
-  const downloadCv = () => {
-    fetch("http://51.195.42.185:4000")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log('Vousus :', result.items)
-        },
-        // Remarque : il est important de traiter les erreurs ici
-        // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
-        // des exceptions provenant de réels bugs du composant.
-        (error) => {
-          console.log('TEST :', result.items)
-        }
-      )
-  }
-  
+  const classes = useStyles();  
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -69,7 +51,7 @@ export default function HeaderLinks(props) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
-          href="#"
+          href="http://51.195.42.185:4000"
           color="transparent"
           target="_blank"
           className={classes.navLink}
