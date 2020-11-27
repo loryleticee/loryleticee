@@ -10,17 +10,20 @@ import Components from "views/Components/Components.js";
 import LandingPage from "views/LandingPage/LandingPage.js";
 import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
+import { ToastProvider } from 'react-toast-notifications'
 
 var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
+    <ToastProvider autoDismiss autoDismissTimeout={'2000'}>
     <Switch>
       <Route path="/landing-page" component={LandingPage} />
       <Route path="/profile-page" component={ProfilePage} />
       <Route path="/login-page" component={LoginPage} />
       <Route path="/" component={Components} />
     </Switch>
+    </ToastProvider>
   </Router>,
   document.getElementById("root")
 );

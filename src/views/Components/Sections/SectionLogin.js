@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -15,6 +15,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import TextField from '@material-ui/core/TextField'
+import { useToasts } from 'react-toast-notifications'
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 
@@ -22,6 +23,61 @@ const useStyles = makeStyles(styles);
 
 export default function SectionLogin() {
   const classes = useStyles();
+  const { addToast } = useToasts()
+  const initValues = {
+    first: 't',
+    email: 'f',
+    message: 'e'
+  }
+
+  const [values, setValues] = useState(initValues)
+  const [errEmail, setErrEmail] = useState(false)
+  const [errName, setErrName] = useState(false)
+  const [errMessage, setErrMessage] = useState(false)
+  const [showSpinner, setshowSpinner] = useState(false)
+
+  const errorApi = () => RegExp(/Error/)
+
+  const onKeyUp = (event) => {
+    if (event.keyCode === 13) {
+      catchSubmit(event)
+    }
+  }
+  
+  const loginCheck = () => {
+    fetch('http://0.0.0.0:4000/mail', {
+    method: 'post',
+    body: JSON.stringify(values)
+    }).then((response)=> {
+      return response
+    }).then((err) => {
+      return err
+    });
+  }
+
+  const catchSubmit = async (e) => {
+    e.preventDefault()
+    setshowSpinner(true)
+    if (values.first !== '' && values.email !== '' && values.message !== '') {
+      const response = await loginCheck(values.first, values.email, values.message)
+      if (errorApi().test(response)) {
+        addToast('oops', { appearance: 'error' })
+      } else {
+        addToast('message envoyé', { appearance: 'success' })
+      }
+    } else {
+      setErrEmail(true)
+      setErrName(true)
+      setErrMessage(true)
+    }
+    setshowSpinner(false)
+  }
+
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+    console.log('TEST :', values)
+  }
+
   return (
     <div className={classes.section}>
       <div className={classes.container}>
@@ -57,6 +113,8 @@ export default function SectionLogin() {
                   <CustomInput
                     labelText="First Name..."
                     id="first"
+                    name='first'
+                    onChange={handleChange('first')}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -64,7 +122,7 @@ export default function SectionLogin() {
                       type: "text",
                       endAdornment: (
                         <InputAdornment position="end">
-                          <People className={classes.inputIconsColor} />
+                          <People className={classes.inputIconsColor}/>
                         </InputAdornment>
                       )
                     }}
@@ -72,6 +130,7 @@ export default function SectionLogin() {
                   <CustomInput
                     labelText="Email..."
                     id="email"
+                    onChange={handleChange('email')}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -79,7 +138,7 @@ export default function SectionLogin() {
                       type: "email",
                       endAdornment: (
                         <InputAdornment position="end">
-                          <Email className={classes.inputIconsColor} />
+                          <Email className={classes.inputIconsColor}/>
                         </InputAdornment>
                       )
                     }}
@@ -97,11 +156,14 @@ export default function SectionLogin() {
                     name='Message'
                     type='textarea'
                     id='message'
+                    value={values.message}
+                    onChange={handleChange('message')}
                     autoComplete='current-message'
+                    error={errMessage}
                 />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
-                  <Button simple color="primary" size="lg">
+                  <Button simple color="primary" size="lg" onClick={catchSubmit}>
                     Get started
                   </Button>
                 </CardFooter>

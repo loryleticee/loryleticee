@@ -33,31 +33,41 @@ app.get('/', function (req, res, next) {
 })
 
 
-app.get('/mail', function (req, res, next) {
-  var transporter = nodemailer.createTransport({
-    service: process.env.MAIL_SERVICE,
-    auth: {
-      user: process.env.MAIL_FROM,
-      pass: process.env.MAIL_PSWD
-    }
+app.post('/mail', function (req, res) {
+  req.on('data', function (chunk) {
+    var result = JSON.parse(chunk);
+    if(result == undefined) res.send("an error occured when request send", 500)
+    
+    var msg = encodeURIComponent(result.message.toLowerCase())
+    var name = encodeURIComponent(result.first.toUpperCase())
+    var email = encodeURIComponent(result.email.toLowerCase())
+
+    var transporter = nodemailer.createTransport({
+      service: process.env.MAIL_SERVICE,
+      auth: {
+        user: process.env.MAIL_FROM,
+        pass: process.env.MAIL_PSWD
+      }
+    });
+    
+    var mailOptions = {
+      from: process.env.MAIL_FROM,
+      to: process.env.MAIL_TO,
+      subject: 'Mail from Portfolio',
+      text: name+' Sent you this message: '+msg+' from this email: ' + email
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.send('Message has been send')
+        window.close();
+      }
+    });
   });
-  
-  var mailOptions = {
-    from: process.env.MAIL_FROM,
-    to: process.env.MAIL_TO,
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
-  };
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-      window.close();
-    }
-  });
-})
+});
 
 
 // app.get('/file/:template', function (req, res, next) {

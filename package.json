@@ -29,6 +29,7 @@
     "react-scripts": "3.4.1",
     "react-slick": "0.26.1",
     "react-swipeable-views": "0.13.9",
+    "react-toast-notifications": "^2.4.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
