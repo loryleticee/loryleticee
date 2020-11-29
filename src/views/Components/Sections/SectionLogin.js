@@ -75,7 +75,6 @@ export default function SectionLogin() {
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
-    console.log('TEST :', values)
   }
 
   return (
