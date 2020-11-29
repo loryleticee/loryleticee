@@ -25,9 +25,9 @@ export default function SectionLogin() {
   const classes = useStyles();
   const { addToast } = useToasts()
   const initValues = {
-    first: 't',
-    email: 'f',
-    message: 'e'
+    first: '',
+    email: '',
+    message: ''
   }
 
   const [values, setValues] = useState(initValues)

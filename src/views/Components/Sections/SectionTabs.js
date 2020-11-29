@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 export default function SectionTabs() {
   const classes = useStyles();
   return (
-    <div className={classes.section}>
+    <div id="about" className={classes.section}>
       <div className={classes.container}>
         <div id="nav-tabs">
           <h3>About...</h3>
