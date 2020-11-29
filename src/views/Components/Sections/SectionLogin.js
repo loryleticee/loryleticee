@@ -58,7 +58,7 @@ export default function SectionLogin() {
   const catchSubmit = async (e) => {
     e.preventDefault()
     setshowSpinner(true)
-    
+
     values.first = document.getElementById('first')
     values.email = document.getElementById('email')
 
@@ -167,7 +167,7 @@ export default function SectionLogin() {
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
                   <Button simple color="primary" size="lg" onClick={catchSubmit}>
-                    Get started
+                    Join Him
                   </Button>
                 </CardFooter>
               </form>

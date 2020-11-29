@@ -16,7 +16,7 @@ export default function SectionDownload() {
   return (
     <div className={classes.section}>
       <div className={classes.container}>
-        <GridContainer className={classes.textCenter} justify="center">
+        {/*<GridContainer className={classes.textCenter} justify="center">
           <GridItem xs={12} sm={12} md={8}>
             <h2>Do you love this UI Kit?</h2>
             <h4>
@@ -26,10 +26,7 @@ export default function SectionDownload() {
               give an old Bootstrap project a new look!
             </h4>
           </GridItem>
-        </GridContainer>
-        <br />
-        <br />
-        
+        </GridContainer>*/}
         <div className={classes.textCenter + " " + classes.sharingArea}>
           <GridContainer justify="center">
             <h3>Thank you for supporting us!</h3>

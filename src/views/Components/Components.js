@@ -63,7 +63,6 @@ export default function Components(props) {
         <SectionCarousel />
         <SectionCompletedExamples />
         <SectionLogin />
-       
         <SectionExamples />
         <SectionDownload />
       </div>
