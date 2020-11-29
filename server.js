@@ -1,13 +1,12 @@
 require('dotenv').config()
-//const http = require('http');
-//const url = require('url');
+const http = require('http');
+const url = require('url');
 const path = require('path')
 var fs = require("fs");
 var cors = require('cors');
 var express = require('express');
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-require('dotenv').config()
 
 const hostname = '0.0.0.0';
 const port = 4000;

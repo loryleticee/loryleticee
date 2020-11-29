@@ -47,7 +47,7 @@ export default function SectionLogin() {
   const loginCheck = () => {
     fetch('http://0.0.0.0:4000/mail', {
     method: 'post',
-    body: JSON.stringify(values)
+    body: values
     }).then((response)=> {
       return response
     }).then((err) => {
@@ -58,8 +58,12 @@ export default function SectionLogin() {
   const catchSubmit = async (e) => {
     e.preventDefault()
     setshowSpinner(true)
+    
+    values.first = document.getElementById('first')
+    values.email = document.getElementById('email')
+
     if (values.first !== '' && values.email !== '' && values.message !== '') {
-      const response = await loginCheck(values.first, values.email, values.message)
+      const response = await loginCheck()
       if (errorApi().test(response)) {
         addToast('oops', { appearance: 'error' })
       } else {
