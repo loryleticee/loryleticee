@@ -46,17 +46,17 @@ app.get('/fdj', function (req, res, next) {
 
   var lines = [];
   var reader = new LineReader(PATH);
-  for (let index = 0; index < 284; index++) {
+  for (let index = 0; index < 285; index++) {
     // Each execution of nextLine will get a following line of text from the input file
     reader.nextLine(function (err, line) {
       console.log('TEST :', err)
       if (!err) {
         lines.push(line)
+      }else{
+        res.send(lines)
       }
     });
   }
-
-  res.send(lines)
   ///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
 
