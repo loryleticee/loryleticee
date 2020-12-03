@@ -57,8 +57,19 @@ app.get('/fdj', function (req, res, next) {
           let sansN = strip.replace(/([N])/, '')
           return sansN;
         })
+
+        let tab = []
+        ouniN.map((line) =>{
+          if(/([a-z|_])/.test(line)){
+            tab['0']['title'] = [...tab, line]
+          }
+          else {
+            var splited = line.split(',')
+            tab['0'][splited[0]] = [...tab, splited[1]]
+          }
+        })
         
-        res.send(ouniN)
+        res.send(tab)
       }
     });
   }
