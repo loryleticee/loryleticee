@@ -54,12 +54,12 @@ app.get('/fdj', function (req, res, next) {
       if (line) {
         lines.push(line)
       } else {
-        lines.map((line) => {
+        lines.map((line, i) => {
           var splited = line.split(',')
           var arrayed;
-          if(index === 284) {
+          if(i === 284) {
             arrayed = JSON.stringify(splited).replace(']',']],')
-          } else if(index === 0) {
+          } else if(i === 0) {
             arrayed = JSON.stringify(splited).replace('[','[[,')
           } else {
             arrayed = JSON.stringify(splited).replace(']','],')
