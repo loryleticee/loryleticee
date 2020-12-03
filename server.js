@@ -61,7 +61,7 @@ app.get('/fdj', function (req, res, next) {
         let tab = []
         tab['number'] = []
         tab['nbr'] = []
-        tab['matin'] = tab['number'] + tab['nbr']
+        tab['matin'] = tab['number'].concat(tab['nbr'])
 
         ouniN.map((line) =>{
           if(/([a-z|_])/.test(line)){
