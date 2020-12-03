@@ -69,7 +69,7 @@ app.get('/fdj', function (req, res, next) {
         })
 
         (async () => {
-          const by = await b()
+          const by = await b
           by.then(data => {
             fs.writeFile("./u.json", JSON.stringify(data), (err) => {
               if (err) res.json(err);
@@ -80,7 +80,7 @@ app.get('/fdj', function (req, res, next) {
             });
           })
         })
-        
+
       }
     });
   }
