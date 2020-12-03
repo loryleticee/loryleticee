@@ -58,7 +58,7 @@ app.get('/fdj', function (req, res, next) {
 
 
 
-        (async () => {
+        
           lines.map((line) => {
             if (/([a-z|_])/.test(line)) {
               i += 1;
@@ -73,17 +73,15 @@ app.get('/fdj', function (req, res, next) {
                 if (err) res.json(err);
               });
             }
-
-            return tab
           })
-        })
+        
 
-        setTimeout(() => {
+        
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
             res.json(data);
           });
-        }, 5000)
+        
 
       }
     });
