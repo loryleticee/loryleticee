@@ -69,6 +69,7 @@ app.get('/fdj', function (req, res, next) {
           })
           return b
         }
+        console.log('TEST :', datas())
         datas().then(data => {
           if (data.length > 0){
             res.send(data)
