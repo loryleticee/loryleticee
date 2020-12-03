@@ -56,20 +56,22 @@ app.get('/fdj', function (req, res, next) {
         lines.push(line)
       } else {
 
-        const b = lines.map((line) => {
-          if (/([a-z|_])/.test(line)) {
-            i += 1;
-            tab[tab_title[i].name] = line;
-          } else {
-            var splited = line.split(',')
-            tab[tab_title[i].name] += [splited[0], splited[1]]
-          }
 
-          return tab
-        })
 
         (async () => {
-          const by = await b
+            bde = lines.map((line) => {
+            if (/([a-z|_])/.test(line)) {
+              i += 1;
+              tab[tab_title[i].name] = line;
+            } else {
+              var splited = line.split(',')
+              tab[tab_title[i].name] += [splited[0], splited[1]]
+            }
+
+            return tab
+          })
+          
+          const by = await bde
           by.then(data => {
             fs.writeFile("./u.json", JSON.stringify(data), (err) => {
               if (err) res.json(err);
@@ -80,6 +82,7 @@ app.get('/fdj', function (req, res, next) {
             });
           })
         })
+
 
       }
     });
