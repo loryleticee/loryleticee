@@ -71,7 +71,13 @@ app.get('/fdj', function (req, res, next) {
         }
 
         datas().then(data => {
-          res.download(data)
+          fs.writeFile("./u.json", JSON.stringify(data), (err) => {
+            if (err) res.json(err);
+            fs.readFile('./u.json', function (err, data) {
+              res.contentType("text/json");
+              res.send(data);
+            });
+          });
         })
       }
     });
