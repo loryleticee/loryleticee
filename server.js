@@ -55,7 +55,7 @@ app.get('/fdj', function (req, res, next) {
       if (line) {
         lines.push(line)
       } else {
-        lines.map((line) => {
+        const datas = lines.map((line) => {
           if (/([a-z|_])/.test(line)) {
             i += 1;
             tab[tab_title[i].name] = line;
@@ -63,9 +63,9 @@ app.get('/fdj', function (req, res, next) {
             var splited = line.split(',')
             tab[tab_title[i].name]+= [splited[0], splited[1]]
           }
-          console.log('TEST :', tab)
+          return tab 
         })
-        res.send(tab)
+        res.send(datas)
         
       }
     });
