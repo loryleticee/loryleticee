@@ -58,7 +58,7 @@ app.get('/fdj', function (req, res, next) {
           console.log('TEST :', line, i)
           var splited = line.split(',')
           var arrayed;
-          if(i === 284) {
+          if(i === 283) {
             arrayed = JSON.stringify(splited).replace(']',']],')
           } else if(i == 0) {
             arrayed = JSON.stringify(splited).replace('[','[[,').replace(']','],')
