@@ -58,17 +58,17 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           var splited = line.split(',')
           splited.length > 2 ? tab += ['_-------_']  :tab += [  splited[0] = splited[1] ];
-          fs.writeFile("./u.json", JSON.parse(tab), (err) => {
+          fs.writeFile("./u.json", tab, (err) => {
             if (err) res.json(err);
           });
         })
 
-        setTimeout(() => {
-          fs.readFile('./u.json', function (err, data) {
-            res.contentType("application/json");
-            res.send(data);
-          });
-        }, 2000)
+        // setTimeout(() => {
+        //   fs.readFile('./u.json', function (err, data) {
+        //     res.contentType("application/json");
+        //     res.send(data);
+        //   });
+        // }, 2000)
 
 
       }
