@@ -33,6 +33,7 @@ app.get('/', function (req, res, next) {
 })
 
 
+var lineReader = require('readline')
 
 app.get('/fdj', function (req, res, next) {
   exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
@@ -41,15 +42,15 @@ app.get('/fdj', function (req, res, next) {
 	var day = String(dateObj.getUTCDate());
   var year = String(dateObj.getUTCFullYear());
 
-  var lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
-  });
-   
+  
+  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt")
+  
   var data;
-  lineReader.on('line', (line) => {
+
+  lineReader.eachLine(PATH, function(line, last, cb) {
     data = [...data, line]
   });
-  
+
   res.send(data)
 	///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
