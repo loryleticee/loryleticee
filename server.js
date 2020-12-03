@@ -63,7 +63,7 @@ app.get('/fdj', function (req, res, next) {
             if (/([a-z|_])/.test(line)) {
               i += 1;
               tab[tab_title[i].name] = line;
-              fs.writeFile("./u.json", tab, (err) => {
+              fs.writeFile("./u.json", JSON.stringify(JSON.parse(tab)), (err) => {
                 if (err) res.json(err);
               });
             } 
@@ -80,7 +80,7 @@ app.get('/fdj', function (req, res, next) {
         
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            res.end(data);
+            res.json(data);
           });
         
 
