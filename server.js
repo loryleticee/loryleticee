@@ -46,7 +46,7 @@ app.get('/fdj', function (req, res, next) {
 
   var lines = [];
   var tab = [];
-  var tab_title = [{'name': "MIDI"}, {'name': "SOIR"}, {'name': "MIDIMONTH"}, {'name': "SOIRMONTH"} ]
+  var tab_title = [{ 'name': "MIDI" }, { 'name': "SOIR" }, { 'name': "MIDIMONTH" }, { 'name': "SOIRMONTH" }]
 
   var reader = new LineReader(PATH);
   var i = -1;
@@ -55,18 +55,20 @@ app.get('/fdj', function (req, res, next) {
       if (line) {
         lines.push(line)
       } else {
-        const datas = lines.map((line) => {
-          if (/([a-z|_])/.test(line)) {
-            i += 1;
-            tab[tab_title[i].name] = line;
-          } else {
-            var splited = line.split(',')
-            tab[tab_title[i].name]+= [splited[0], splited[1]]
-          }
-          return tab 
-        })
-        res.send(datas)
-        
+        const datas = async() => {
+          const b = await lines.map((line) => {
+                  if (/([a-z|_])/.test(line)) {
+                    i += 1;
+                    tab[tab_title[i].name] = line;
+                  } else {
+                    var splited = line.split(',')
+                    tab[tab_title[i].name] += [splited[0], splited[1]]
+                  }
+                  return tab
+                })
+          console.log('TEST :', v)
+          b.then(data=> res.send(data))
+        }
       }
     });
   }
