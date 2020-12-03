@@ -47,13 +47,13 @@ app.get('/fdj', function (req, res, next) {
   var lines = [];
   var reader = new LineReader(PATH);
   for (let index = 0; index < 285; index++) {
-    // Each execution of nextLine will get a following line of text from the input file
     reader.nextLine(function (err, line) {
-      console.log('TEST :', line)
       if (line) {
         lines.push(line)
       }else{
-        res.send(lines)
+        ouniN = lines.map((line)=> {return line.replace('N','').replace(' ','')})
+
+        res.send(ouniN)
       }
     });
   }
