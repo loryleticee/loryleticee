@@ -71,7 +71,7 @@ app.get('/fdj', function (req, res, next) {
             switch (k) {
               case k == 0:
                 midi[`${splited[0]}`] = splited[1]
-                fs.appendFile("./u.json", JSON.stringify( midi ), (err) => {
+                fs.appendFile("./u.json", JSON.stringify( {midi} ), (err) => {
                   if (err) res.json(err);
                 });
                 break;
