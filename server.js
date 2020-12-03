@@ -59,16 +59,15 @@ app.get('/fdj', function (req, res, next) {
           if (/([a-z|_])/.test(line)) {
             tab[tab_title[i].name] = line;
             console.log('TEST :', tab[tab_title[i].name])
-
             i += 1;
           } else {
             var splited = line.split(',')
-            //tab[[tab_title[i].name] [splited[0]] ] = [...tab[ [tab_title[i].name] [splited[0]] ], splited[1]];
+            tab[[tab_title[i].name]].push({'NUMBER': splited[0], 'MOL': splited[1]});
           }
           
-        })
+        },res.send(tab))
 
-        res.send(tab)
+        
       }
     });
   }
