@@ -80,7 +80,7 @@ app.get('/fdj', function (req, res, next) {
         
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            res.json(data);
+            res.send(data);
           });
         
 
