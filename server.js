@@ -17,19 +17,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
 app.get('/', function (req, res, next) {
-  let datas = fs.readdirSync(__dirname+"/src/assets/img/cv");
+  let datas = fs.readdirSync(__dirname + "/src/assets/img/cv");
   let files = []
   for (var file of datas) {
     let name = file.split('.');
-    if(name[1] === 'pdf')
+    if (name[1] === 'pdf')
       files.push([name[0], name[0]])
   }
 
   const filePath = "/src/assets/img/cv/CV-lory-leticee.pdf";
-  fs.readFile(__dirname + filePath , function (err,data){
+  fs.readFile(__dirname + filePath, function (err, data) {
     res.contentType("application/pdf");
     res.send(data);
-   });
+  });
 })
 
 
@@ -37,29 +37,26 @@ var LineReader = require('node-line-reader').LineReader;
 
 app.get('/fdj', function (req, res, next) {
   exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
-	var dateObj = new Date();
-	var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
-	var day = String(dateObj.getUTCDate());
+  var dateObj = new Date();
+  var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
+  var day = String(dateObj.getUTCDate());
   var year = String(dateObj.getUTCFullYear());
 
-  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt")
-  
-  var data = [];
-  var reader = new LineReader(PATH);
-  for (let index = 0; index < 285; index++) {
-    
-    // Each execution of nextLine will get a following line of text from the input file
-  reader.nextLine(function (err, line) {
-      if (!err) {
-        console.log(line)
-        data = [...data, line]
-      }
-  });
-  }
-  
+  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt")
 
-  res.send(data)
-	///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
+  var lines = [];
+  var reader = new LineReader(PATH);
+  for (let index = 0; index < 284; index++) {
+    // Each execution of nextLine will get a following line of text from the input file
+    reader.nextLine(function (err, line) {
+      if (!err) {
+        lines.push(line)
+      }
+    });
+  }
+
+  res.send(lines)
+  ///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
 
 
@@ -67,7 +64,7 @@ app.get('/fdj', function (req, res, next) {
 //   req.on('data', function (chunk) {
 //     var result = JSON.parse(chunk);
 //     if(result == undefined) res.send("an error occured when request send", 500)
-    
+
 //     var msg = encodeURIComponent(result.message.toLowerCase())
 //     var name = encodeURIComponent(result.first.toUpperCase())
 //     var email = encodeURIComponent(result.email.toLowerCase())
@@ -79,14 +76,14 @@ app.get('/fdj', function (req, res, next) {
 //         pass: process.env.MAIL_PSWD
 //       }
 //     });
-    
+
 //     var mailOptions = {
 //       from: process.env.MAIL_FROM,
 //       to: process.env.MAIL_TO,
 //       subject: 'Mail from Portfolio',
 //       text: name+' Sent you this message: '+msg+' from this email: ' + email
 //     };
-    
+
 //     transporter.sendMail(mailOptions, function(error, info){
 //       if (error) {
 //         console.log(error);
@@ -127,7 +124,7 @@ app.get('/fdj', function (req, res, next) {
 //           res.end("Successfully Written to File " + title + ".html");
 //         });
 //       }
-      
+
 //       return result;
 //   });
 // })
