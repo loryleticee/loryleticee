@@ -54,14 +54,17 @@ app.get('/fdj', function (req, res, next) {
       }else{
         ouniN = lines.map((line)=> {
           return line
-          .replace('tops_soirnumeros','SOIR')
-          .replace('tops_midinumeros', 'MIDI')
-          .replace('tops_midi_monthumeros', 'MOIS-MIDI')
-          .replace('tops_soir_monthumeros', 'MOIS-SOIR')
+          .replace('tops_soirNumeros','SOIR')
+          .replace('tops_midiNumeros', 'MIDI')
+          .replace('tops_midi_monthNumeros', 'MOIS-MIDI')
+          .replace('tops_soir_monthNumeros', 'MOIS-SOIR')
           .replace(' ','')
         })
 
-        res.send(ouniN)
+        lines = ouniN.map((line)=> {
+          return line.replace('N','')
+        })
+        res.send(lines)
       }
     });
   }
