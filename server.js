@@ -57,8 +57,13 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           var splited = line.split(',')
           var arrayed;
-          if(index === 284) arrayed = JSON.stringify(splited).replace(']',']],')
-          if(index === 1) arrayed = JSON.stringify(splited).replace('[','[[,')
+          if(index === 284) {
+            arrayed = JSON.stringify(splited).replace(']',']],')
+          } else if(index === 0) {
+            arrayed = JSON.stringify(splited).replace('[','[[,')
+          } else {
+            arrayed = JSON.stringify(splited).replace(']','],')
+          }
           fs.appendFile("./u.json", arrayed, (err) => {
             if (err) res.json(err);
           })
