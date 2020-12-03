@@ -8,6 +8,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //var nodemailer = require('nodemailer');
 const { exec } = require("child_process");
+const { JsxEmit } = require('typescript');
 
 const hostname = '0.0.0.0';
 const port = 4000;
@@ -55,8 +56,8 @@ app.get('/fdj', function (req, res, next) {
       } else {
         lines.map((line) => {
           var splited = line.split(',')
-          var arrayed = splited.replace(']','],')
-          console.log('TEST :',JSON.stringify(arrayed))
+          var arrayed = JSON.stringify(splited).replace(']','],')
+          console.log('TEST :',arrayed)
           fs.appendFile("./u.json", JSON.stringify(arrayed), (err) => {
             if (err) res.json(err);
           })
