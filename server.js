@@ -59,7 +59,7 @@ app.get('/fdj', function (req, res, next) {
 
 
         (async () => {
-            bde = lines.map((line) => {
+            var make = lines.map((line) => {
             if (/([a-z|_])/.test(line)) {
               i += 1;
               tab[tab_title[i].name] = line;
@@ -71,7 +71,7 @@ app.get('/fdj', function (req, res, next) {
             return tab
           })
           
-          const by = await bde
+          const by = await make()
           by.then(data => {
             fs.writeFile("./u.json", JSON.stringify(data), (err) => {
               if (err) res.json(err);
