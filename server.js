@@ -60,35 +60,34 @@ app.get('/fdj', function (req, res, next) {
 
         lines.map((line) => {
           var splited = line.split(',')
-          console.log('TEST :', splited.length)
           if (splited.length < 2) {
             expr += 1;
-            fs.appendFile("./u.json", JSON.stringify({ line }), (err) => {
+            fs.appendFile("./u.json", JSON.stringify(line), (err) => {
               if (err) res.json(err);
             });
           } else {
             switch (expr) {
               case (expr - 1) === 0:
                 midi[`${splited[0]}`] = splited[1]
-                fs.appendFile("./u.json", JSON.stringify({ midi }), (err) => {
+                fs.appendFile("./u.json", JSON.stringify( midi ), (err) => {
                   if (err) res.json(err);
                 });
                 break;
               case (expr - 1) === 1:
                 moismidi[`${splited[0]}`] = splited[1]
-                fs.appendFile("./u.json", JSON.stringify({ moismidi }), (err) => {
+                fs.appendFile("./u.json", JSON.stringify(moismidi), (err) => {
                   if (err) res.json(err);
                 });
                 break;
               case (expr - 1) === 2:
                 soir[`${splited[0]}`] = splited[1]
-                fs.appendFile("./u.json", JSON.stringify({ soir }), (err) => {
+                fs.appendFile("./u.json", JSON.stringify(soir), (err) => {
                   if (err) res.json(err);
                 });
                 break;
               case (expr - 1) === 3:
                 moissoir[`${splited[0]}`] = splited[1]
-                fs.appendFile("./u.json", JSON.stringify({ moissoir }), (err) => {
+                fs.appendFile("./u.json", JSON.stringify(moissoir), (err) => {
                   if (err) res.json(err);
                 });
                 break;
