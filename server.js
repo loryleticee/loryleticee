@@ -64,8 +64,8 @@ app.get('/fdj', function (req, res, next) {
             tab[tab_title[i-1].name]+= {'NUMBER': splited[0], 'MOL': splited[1]} ;
           }
           
-        },res.send(tab))
-
+        })
+        res.send(tab)
         
       }
     });
