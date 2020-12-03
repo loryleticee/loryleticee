@@ -69,6 +69,7 @@ app.get('/fdj', function (req, res, next) {
             switch (expr) {
               case (expr - 1) === 0:
                 midi[`${splited[0]}`] = splited[1]
+                console.log('TEST :', midi)
                 fs.appendFile("./u.json", JSON.stringify( midi ), (err) => {
                   if (err) res.json(err);
                 });
