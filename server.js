@@ -53,9 +53,11 @@ app.get('/fdj', function (req, res, next) {
         lines.push(line)
       }else{
         ouniN = lines.map((line)=> {
-          return line.replace(' ','')
+          let strip = line.replace(' ','')
+          let sansN = strip.replace(/([N])/, '')
+          return sansN;
         })
-
+        
         res.send(ouniN)
       }
     });
