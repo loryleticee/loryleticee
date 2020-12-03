@@ -69,22 +69,22 @@ app.get('/fdj', function (req, res, next) {
           } else {
             if ((i-1) === 0) 
               midi[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.parse(midi), (err) => {
+              fs.writeFile("./u.json", JSON.parse({midi}), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 1) 
               moismidi[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.parse(moismidi), (err) => {
+              fs.writeFile("./u.json", JSON.parse({moismidi}), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 2) 
               soir[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.parse(soir), (err) => {
+              fs.writeFile("./u.json", JSON.parse({soir}), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 3) 
               moissoir[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.stringify(moissoir), (err) => {
+              fs.writeFile("./u.json", JSON.parse({moissoir}), (err) => {
                 if (err) res.json(err);
               });
           }
