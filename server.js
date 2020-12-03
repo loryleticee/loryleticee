@@ -61,9 +61,9 @@ app.get('/fdj', function (req, res, next) {
             tab[tab_title[i].name] = line;
           } else {
             var splited = line.split(',')
-            tab[tab_title[i].name]+= [{'NUMBER': splited[0], 'MOL': splited[1]}] ;
+            tab[tab_title[i].name]+= splited[0], splited[1]
           }
-          console.log('TEST :', {tab})
+          console.log('TEST :', tab)
         })
         res.send(tab)
         
