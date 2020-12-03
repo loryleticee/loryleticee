@@ -55,6 +55,7 @@ app.get('/fdj', function (req, res, next) {
         lines.push(line)
       } else {
         lines.map((line, i) => {
+          console.log('TEST :', line, i)
           var splited = line.split(',')
           var arrayed;
           if(i === 284) {
