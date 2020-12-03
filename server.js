@@ -53,18 +53,10 @@ app.get('/fdj', function (req, res, next) {
         lines.push(line)
       }else{
         ouniN = lines.map((line)=> {
-          return line
-          .replace('tops_soirNumeros','SOIR')
-          .replace('tops_midiNumeros', 'MIDI')
-          .replace('tops_midi_monthNumeros', 'MOIS-MIDI')
-          .replace('tops_soir_monthNumeros', 'MOIS-SOIR')
-          .replace(' ','')
+          return line.replace(' ','')
         })
 
-        lines = ouniN.map((line)=> {
-          return line.replace('N','')
-        })
-        res.send(lines)
+        res.send(ouniN)
       }
     });
   }
