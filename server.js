@@ -56,7 +56,7 @@ app.get('/fdj', function (req, res, next) {
         lines.push(line)
       } else {
         (async () => {
-          const b = await lines.map((line) => {
+          const b = lines.map((line) => {
             if (/([a-z|_])/.test(line)) {
               i += 1;
               tab[tab_title[i].name] = line;
