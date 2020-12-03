@@ -8,8 +8,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //var nodemailer = require('nodemailer');
 const { exec } = require("child_process");
-const { JsxEmit, visitEachChild } = require('typescript');
-const { version } = require('react-dom');
+const { JsxEmit } = require('typescript');
 
 const hostname = '0.0.0.0';
 const port = 4000;
@@ -57,7 +56,7 @@ app.get('/fdj', function (req, res, next) {
       } else {
         lines.map((line) => {
           var splited = line.split(',')
-          var arrayed = JSON.stringify(splited).replace(']','],')
+          var arrayed = index !== 284 ? JSON.stringify(splited).replace(']','],') : null;
           fs.appendFile("./u.json", arrayed, (err) => {
             if (err) res.json(err);
           })
@@ -65,9 +64,7 @@ app.get('/fdj', function (req, res, next) {
         setTimeout(() => {
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            var v = data.replace('[','[[')
-            v = v+']'
-            res.send(v);
+            res.send(data);
           });
         }, 1000)
       }
