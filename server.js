@@ -55,7 +55,7 @@ app.get('/fdj', function (req, res, next) {
       if (line) {
         lines.push(line)
       } else {
-        const datas = async () => {
+        (async () => {
           const b = await lines.map((line) => {
             if (/([a-z|_])/.test(line)) {
               i += 1;
@@ -68,16 +68,17 @@ app.get('/fdj', function (req, res, next) {
             return tab
           })
           return b
-        }
 
-        datas().then(data => {
-          fs.writeFile("./u.json", JSON.stringify(data), (err) => {
-            if (err) res.json(err);
-            fs.readFile('./u.json', function (err, data) {
-              res.contentType("text/json");
-              res.send(data);
+
+          await datas().then(data => {
+            fs.writeFile("./u.json", JSON.stringify(data), (err) => {
+              if (err) res.json(err);
+              fs.readFile('./u.json', function (err, data) {
+                res.contentType("text/json");
+                res.send(data);
+              });
             });
-          });
+          })
         })
       }
     });
