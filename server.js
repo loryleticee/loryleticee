@@ -50,7 +50,7 @@ app.get('/fdj', function (req, res, next) {
     // Each execution of nextLine will get a following line of text from the input file
     reader.nextLine(function (err, line) {
       console.log('TEST :', line)
-      if (!err) {
+      if (line) {
         lines.push(line)
       }else{
         res.send(lines)
