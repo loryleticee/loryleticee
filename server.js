@@ -45,9 +45,9 @@ app.get('/fdj', function (req, res, next) {
     input: require('fs').createReadStream(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
   });
    
-  var data = 
-  lineReader.on('line', function (line, last) {
-    console.log(last)
+  var data;
+  lineReader.on('line', function (line, last, truc) {
+    console.log(truc)
     //data = [...data, line]
   });
   res.send(data)
