@@ -62,7 +62,7 @@ app.get('/fdj', function (req, res, next) {
             i += 1;
           } else {
             var splited = line.split(',')
-            tab[[tab_title[i].name]].push({'NUMBER': splited[0], 'MOL': splited[1]});
+            tab[[tab_title[i].name]].push([ {'NUMBER': splited[0], 'MOL': splited[1]} ]);
           }
           
         },res.send(tab))
