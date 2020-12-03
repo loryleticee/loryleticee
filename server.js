@@ -67,10 +67,10 @@ app.get('/fdj', function (req, res, next) {
 
             return tab
           })
-          return b
 
 
-          await datas().then(data => {
+          const by = await b()
+          by.then(data => {
             fs.writeFile("./u.json", JSON.stringify(data), (err) => {
               if (err) res.json(err);
               fs.readFile('./u.json', function (err, data) {
