@@ -74,19 +74,19 @@ app.get('/fdj', function (req, res, next) {
                   if (err) res.json(err);
                 });
                 break;
-              case (i - 1) === 1:
+              case (expr - 1) === 1:
                 moismidi[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify({ moismidi }), (err) => {
                   if (err) res.json(err);
                 });
                 break;
-              case (i - 1) === 2:
+              case (expr - 1) === 2:
                 soir[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify({ soir }), (err) => {
                   if (err) res.json(err);
                 });
                 break;
-              case (i - 1) === 3:
+              case (expr - 1) === 3:
                 moissoir[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify({ moissoir }), (err) => {
                   if (err) res.json(err);
