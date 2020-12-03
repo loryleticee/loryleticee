@@ -59,29 +59,31 @@ app.get('/fdj', function (req, res, next) {
 
 
         (async () => {
-            var make = lines.map((line) => {
+          lines.map((line) => {
             if (/([a-z|_])/.test(line)) {
               i += 1;
               tab[tab_title[i].name] = line;
+              fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
+                if (err) res.json(err);
+              });
             } else {
               var splited = line.split(',')
               tab[tab_title[i].name] += [splited[0], splited[1]]
+              fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
+                if (err) res.json(err);
+              });
             }
 
             return tab
           })
-          
-        make.then(data => {
-             fs.writeFile("./u.json", JSON.stringify(data), (err) => {
-              if (err) res.json(err);
-              fs.readFile('./u.json', function (err, data) {
-                res.contentType("text/json");
-                res.send(data);
-              });
-            });
-          })
         })
 
+        setTimeout(() => {
+          fs.readFile('./u.json', function (err, data) {
+            res.contentType("text/json");
+            res.send(data);
+          });
+        }, 2000)
 
       }
     });
