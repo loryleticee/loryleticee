@@ -51,7 +51,7 @@ app.get('/fdj', function (req, res, next) {
   var moissoir = {};
 
   var reader = new LineReader(PATH);
-
+  var i = 0
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
@@ -63,11 +63,19 @@ app.get('/fdj', function (req, res, next) {
           console.log('TEST :', splited)
           if (splited.length > 2) {
             tab[index + '-'] = '-----';
+            i+=1;
             fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
               if (err) res.json(err);
             });
           } else {
-            `${midi}[${splited[0]}]` = splited[1]
+            if ((i-1) === 0) 
+              midi[`${splited[0]}`] = splited[1]
+            if ((i-1) === 1) 
+              moismidi[`${splited[0]}`] = splited[1]
+            if ((i-1) === 2) 
+              soir[`${splited[0]}`] = splited[1]
+            if ((i-1) === 3) 
+              moissoir[`${splited[0]}`] = splited[1]
             fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
               if (err) res.json(err);
             });
