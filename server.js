@@ -49,7 +49,7 @@ app.get('/fdj', function (req, res, next) {
   for (let index = 0; index < 285; index++) {
     // Each execution of nextLine will get a following line of text from the input file
     reader.nextLine(function (err, line) {
-      console.log('TEST :', err)
+      console.log('TEST :', line)
       if (!err) {
         lines.push(line)
       }else{
