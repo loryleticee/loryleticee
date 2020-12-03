@@ -33,7 +33,7 @@ app.get('/', function (req, res, next) {
 })
 
 
-var lineReader = require('readline')
+var LineReader = require('node-line-reader').LineReader;
 
 app.get('/fdj', function (req, res, next) {
   exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
@@ -42,13 +42,16 @@ app.get('/fdj', function (req, res, next) {
 	var day = String(dateObj.getUTCDate());
   var year = String(dateObj.getUTCFullYear());
 
-  
   let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt")
   
-  var data;
-
-  lineReader.eachLine(PATH, function(line, last, cb) {
-    data = [...data, line]
+  var data = [];
+  var reader = new LineReader(PATH);
+ 
+  // Each execution of nextLine will get a following line of text from the input file
+  reader.nextLine(function (err, line) {
+      if (!err) {
+        data = [...data, line]
+      }
   });
 
   res.send(data)
