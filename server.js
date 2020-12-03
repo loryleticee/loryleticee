@@ -53,12 +53,12 @@ app.get('/fdj', function (req, res, next) {
       }else{
         ouniN = lines.map((line)=> {
           return line
-          .replace('N','')
-          .replace('tops_soirumeros ','SOIR')
-          .replace('tops_midiumeros ', 'MIDI')
+          .replace('tops_soirnumeros ','SOIR')
+          .replace('tops_midinumeros ', 'MIDI')
           .replace('tops_midi_monthumeros', 'MOIS-MIDI')
           .replace('tops_soir_monthumeros', 'MOIS-SOIR')
           .replace(' ','')
+          .replace('N','')
         })
 
         res.send(ouniN)
