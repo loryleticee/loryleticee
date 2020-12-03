@@ -49,7 +49,7 @@ app.get('/fdj', function (req, res, next) {
   var tab_title = [{'name': "MIDI"}, {'name': "SOIR"}, {'name': "MIDI-MONTH"}, {'name': "SOIR-MONTH"} ]
 
   var reader = new LineReader(PATH);
-  var i = 0;
+  var i = -1;
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
@@ -57,11 +57,11 @@ app.get('/fdj', function (req, res, next) {
       } else {
         lines.map((line) => {
           if (/([a-z|_])/.test(line)) {
-            tab[tab_title[i].name] = line;
             i += 1;
+            tab[tab_title[i].name] = line;
           } else {
             var splited = line.split(',')
-            tab[tab_title[i-1].name]+= {'NUMBER': splited[0], 'MOL': splited[1]} ;
+            tab[tab_title[i].name]+= {'NUMBER': splited[0], 'MOL': splited[1]} ;
           }
           console.log('TEST :', tab)
         })
