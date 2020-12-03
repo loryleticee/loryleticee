@@ -64,7 +64,8 @@ app.get('/fdj', function (req, res, next) {
         setTimeout(() => {
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            res.send(new Array(data));
+            var v = new Array(data)
+            res.send(JSON.stringify(v));
           });
         }, 1000)
       }
