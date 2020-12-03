@@ -51,7 +51,7 @@ app.get('/fdj', function (req, res, next) {
   var moissoir = {};
 
   var reader = new LineReader(PATH);
-  var expr = -1
+  var expr = 0
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
