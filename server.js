@@ -6,7 +6,8 @@ var fs = require("fs");
 var cors = require('cors');
 var express = require('express');
 var bodyParser = require('body-parser');
-var nodemailer = require('nodemailer');
+//var nodemailer = require('nodemailer');
+const { exec } = require("child_process");
 
 const hostname = '0.0.0.0';
 const port = 4000;
@@ -31,54 +32,62 @@ app.get('/', function (req, res, next) {
    });
 })
 
-const { exec, spawn } = require("child_process");
+
 
 app.get('/fdj', function (req, res, next) {
-        exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
+  exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
 	var dateObj = new Date();
 	var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
 	var day = String(dateObj.getUTCDate());
-	var year = String(dateObj.getUTCFullYear());
-	res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
-	
+  var year = String(dateObj.getUTCFullYear());
+
+  var lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
+  });
+   var arr = []
+  lineReader.on('line', function (line) {
+    arr.push({line});
+  });
+  res.send(arr)
+	///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
 
 
-app.post('/mail', function (req, res) {
-  req.on('data', function (chunk) {
-    var result = JSON.parse(chunk);
-    if(result == undefined) res.send("an error occured when request send", 500)
+// app.post('/mail', function (req, res) {
+//   req.on('data', function (chunk) {
+//     var result = JSON.parse(chunk);
+//     if(result == undefined) res.send("an error occured when request send", 500)
     
-    var msg = encodeURIComponent(result.message.toLowerCase())
-    var name = encodeURIComponent(result.first.toUpperCase())
-    var email = encodeURIComponent(result.email.toLowerCase())
+//     var msg = encodeURIComponent(result.message.toLowerCase())
+//     var name = encodeURIComponent(result.first.toUpperCase())
+//     var email = encodeURIComponent(result.email.toLowerCase())
 
-    var transporter = nodemailer.createTransport({
-      service: process.env.MAIL_SERVICE,
-      auth: {
-        user: process.env.MAIL_FROM,
-        pass: process.env.MAIL_PSWD
-      }
-    });
+//     var transporter = nodemailer.createTransport({
+//       service: process.env.MAIL_SERVICE,
+//       auth: {
+//         user: process.env.MAIL_FROM,
+//         pass: process.env.MAIL_PSWD
+//       }
+//     });
     
-    var mailOptions = {
-      from: process.env.MAIL_FROM,
-      to: process.env.MAIL_TO,
-      subject: 'Mail from Portfolio',
-      text: name+' Sent you this message: '+msg+' from this email: ' + email
-    };
+//     var mailOptions = {
+//       from: process.env.MAIL_FROM,
+//       to: process.env.MAIL_TO,
+//       subject: 'Mail from Portfolio',
+//       text: name+' Sent you this message: '+msg+' from this email: ' + email
+//     };
     
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.send('Message has been send')
-        window.close();
-      }
-    });
-  });
-});
+//     transporter.sendMail(mailOptions, function(error, info){
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         console.log('Email sent: ' + info.response);
+//         res.send('Message has been send')
+//         window.close();
+//       }
+//     });
+//   });
+// });
 
 
 // app.get('/file/:template', function (req, res, next) {
