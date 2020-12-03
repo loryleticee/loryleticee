@@ -49,16 +49,16 @@ app.get('/fdj', function (req, res, next) {
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
+        console.log('TEST :', line)
         lines.push(line)
       }else{
         ouniN = lines.map((line)=> {
           return line
-          .replace('tops_soirnumeros ','SOIR')
-          .replace('tops_midinumeros ', 'MIDI')
+          .replace('tops_soirnumeros','SOIR')
+          .replace('tops_midinumeros', 'MIDI')
           .replace('tops_midi_monthumeros', 'MOIS-MIDI')
           .replace('tops_soir_monthumeros', 'MOIS-SOIR')
           .replace(' ','')
-          .replace('N','')
         })
 
         res.send(ouniN)
