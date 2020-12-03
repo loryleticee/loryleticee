@@ -67,12 +67,12 @@ app.get('/fdj', function (req, res, next) {
 
             return tab
           })
-          return b
+          b.then(data => {
+            res.send(data)
+          })
         }
 
-        datas().then(data => {
-          res.send(data)
-        })
+        datas()
       }
     });
   }
