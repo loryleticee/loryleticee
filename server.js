@@ -46,10 +46,10 @@ app.get('/fdj', function (req, res, next) {
   });
    
   var data;
-  lineReader.on('line', function (line, last, truc) {
-    console.log(truc)
-    //data = [...data, line]
+  lineReader.on('line', (line) => {
+    data = [...data, line]
   });
+  
   res.send(data)
 	///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
