@@ -61,7 +61,7 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           var splited = line.split(',')
           console.log('TEST :', splited.length)
-          if (splited.length > 2) {
+          if (splited.length < 2) {
             i+=1;
             fs.appendFile("./u.json", JSON.stringify({line}), (err) => {
               if (err) res.json(err);
