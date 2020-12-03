@@ -51,7 +51,7 @@ app.get('/fdj', function (req, res, next) {
   var moissoir = {};
 
   var reader = new LineReader(PATH);
-  var i = 0
+  var expr = -1
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
@@ -62,31 +62,39 @@ app.get('/fdj', function (req, res, next) {
           var splited = line.split(',')
           console.log('TEST :', splited.length)
           if (splited.length < 2) {
-            i+=1;
-            fs.appendFile("./u.json", JSON.stringify({line}), (err) => {
+            expr += 1;
+            fs.appendFile("./u.json", JSON.stringify({ line }), (err) => {
               if (err) res.json(err);
             });
           } else {
-            if ((i-1) === 0) 
-              midi[`${splited[0]}`] = splited[1]
-              fs.appendFile("./u.json", JSON.stringify({midi}), (err) => {
-                if (err) res.json(err);
-              });
-            if ((i-1) === 1) 
-              moismidi[`${splited[0]}`] = splited[1]
-              fs.appendFile("./u.json", JSON.stringify({moismidi}), (err) => {
-                if (err) res.json(err);
-              });
-            if ((i-1) === 2) 
-              soir[`${splited[0]}`] = splited[1]
-              fs.appendFile("./u.json", JSON.stringify({soir}), (err) => {
-                if (err) res.json(err);
-              });
-            if ((i-1) === 3) 
-              moissoir[`${splited[0]}`] = splited[1]
-              fs.appendFile("./u.json", JSON.stringify({moissoir}), (err) => {
-                if (err) res.json(err);
-              });
+            switch (expr) {
+              case (expr - 1) === 0:
+                midi[`${splited[0]}`] = splited[1]
+                fs.appendFile("./u.json", JSON.stringify({ midi }), (err) => {
+                  if (err) res.json(err);
+                });
+                break;
+              case (i - 1) === 1:
+                moismidi[`${splited[0]}`] = splited[1]
+                fs.appendFile("./u.json", JSON.stringify({ moismidi }), (err) => {
+                  if (err) res.json(err);
+                });
+                break;
+              case (i - 1) === 2:
+                soir[`${splited[0]}`] = splited[1]
+                fs.appendFile("./u.json", JSON.stringify({ soir }), (err) => {
+                  if (err) res.json(err);
+                });
+                break;
+              case (i - 1) === 3:
+                moissoir[`${splited[0]}`] = splited[1]
+                fs.appendFile("./u.json", JSON.stringify({ moissoir }), (err) => {
+                  if (err) res.json(err);
+                });
+                break;
+              default:
+                console.log(`Sorry, we are out of ${expr}.`);
+            }
           }
         })
 
