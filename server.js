@@ -46,7 +46,7 @@ app.get('/fdj', function (req, res, next) {
   
   var data = [];
   var reader = new LineReader(PATH);
-  for (let index = 0; index < 210; index++) {
+  for (let index = 0; index < 285; index++) {
     
     // Each execution of nextLine will get a following line of text from the input file
   reader.nextLine(function (err, line) {
