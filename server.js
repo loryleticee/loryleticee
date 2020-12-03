@@ -63,23 +63,23 @@ app.get('/fdj', function (req, res, next) {
           console.log('TEST :', splited)
           if (splited.length > 2) {
             i+=1;
-            fs.writeFile("./u.json", JSON.stringify(line), (err) => {
+            fs.writeFile("./u.json", JSON.parse(line), (err) => {
               if (err) res.json(err);
             });
           } else {
             if ((i-1) === 0) 
               midi[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.stringify(midi), (err) => {
+              fs.writeFile("./u.json", JSON.parse(midi), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 1) 
               moismidi[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.stringify(moismidi), (err) => {
+              fs.writeFile("./u.json", JSON.parse(moismidi), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 2) 
               soir[`${splited[0]}`] = splited[1]
-              fs.writeFile("./u.json", JSON.stringify(soir), (err) => {
+              fs.writeFile("./u.json", JSON.parse(soir), (err) => {
                 if (err) res.json(err);
               });
             if ((i-1) === 3) 
