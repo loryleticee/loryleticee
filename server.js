@@ -49,7 +49,6 @@ app.get('/fdj', function (req, res, next) {
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
-        console.log('TEST :', line)
         lines.push(line)
       }else{
         ouniN = lines.map((line)=> {
@@ -69,9 +68,11 @@ app.get('/fdj', function (req, res, next) {
           }
           else {
             var splited = line.split(',')
+            console.log('TEST :',splited)
             tab['number'] = [...tab['number'], splited[0]]
             tab['nbr'] = [...tab['nbr'], splited[1]]
           }
+
         })
         
         res.send(tab)
