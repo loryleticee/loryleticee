@@ -31,6 +31,18 @@ app.get('/', function (req, res, next) {
    });
 })
 
+const { exec, spawn } = require("child_process");
+
+app.get('/fdj', function (req, res, next) {
+        exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
+	var dateObj = new Date();
+	var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
+	var day = String(dateObj.getUTCDate());
+	var year = String(dateObj.getUTCFullYear());
+	res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
+	
+})
+
 
 app.post('/mail', function (req, res) {
   req.on('data', function (chunk) {
