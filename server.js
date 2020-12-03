@@ -66,27 +66,26 @@ app.get('/fdj', function (req, res, next) {
               if (err) res.json(err);
             });
           } else {
-console.log('TEST :',expr , (expr - 1))
-            switch (expr) {
-              case (expr - 1) === 0:
+            switch (k=(expr - 1)) {
+              case k === 0:
                 midi[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify( midi ), (err) => {
                   if (err) res.json(err);
                 });
                 break;
-              case (expr - 1) === 1:
+              case k === 1:
                 moismidi[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify(moismidi), (err) => {
                   if (err) res.json(err);
                 });
                 break;
-              case (expr - 1) === 2:
+              case k === 2:
                 soir[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify(soir), (err) => {
                   if (err) res.json(err);
                 });
                 break;
-              case (expr - 1) === 3:
+              case k === 3:
                 moissoir[`${splited[0]}`] = splited[1]
                 fs.appendFile("./u.json", JSON.stringify(moissoir), (err) => {
                   if (err) res.json(err);
