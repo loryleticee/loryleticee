@@ -68,9 +68,10 @@ app.get('/fdj', function (req, res, next) {
           }
           else {
             var splited = line.split(',')
-            console.log('TEST :',splited)
+            
             tab['number'] = [...tab['number'], splited[0]]
             tab['nbr'] = [...tab['nbr'], splited[1]]
+            console.log('TEST :',tab)
           }
 
         })
