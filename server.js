@@ -45,7 +45,10 @@ app.get('/fdj', function (req, res, next) {
   let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt")
 
   var lines = [];
-  var tab = [];
+  var midi = {};
+  var moismidi = {};
+  var soir = {};
+  var moissoir = {};
 
   var reader = new LineReader(PATH);
 
@@ -57,10 +60,17 @@ app.get('/fdj', function (req, res, next) {
 
         lines.map((line) => {
           var splited = line.split(',')
-          splited.length > 2 ? tab += ['_-------_']  :tab += [  splited[0] = splited[1] ];
-          fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
-            if (err) res.json(err);
-          });
+          if (splited.length > 2) {
+            tab[index + '-'] = '-----';
+            fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
+              if (err) res.json(err);
+            });
+          } else {
+            `${midi}[${splited[0]}]` = splited[1]
+            fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
+              if (err) res.json(err);
+            });
+          }
         })
 
         // setTimeout(() => {
