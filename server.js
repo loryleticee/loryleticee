@@ -83,7 +83,7 @@ app.get('/fdj', function (req, res, next) {
             res.contentType("application/json");
             res.json(data);
           });
-        }, 2000)
+        }, 5000)
 
       }
     });
