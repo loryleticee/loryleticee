@@ -8,7 +8,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //var nodemailer = require('nodemailer');
 const { exec } = require("child_process");
-const { JsxEmit } = require('typescript');
+const { JsxEmit, visitEachChild } = require('typescript');
+const { version } = require('react-dom');
 
 const hostname = '0.0.0.0';
 const port = 4000;
@@ -64,7 +65,9 @@ app.get('/fdj', function (req, res, next) {
         setTimeout(() => {
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            res.send(data);
+            var v = data.replace('[','[[')
+            v = v+']'
+            res.send(v);
           });
         }, 1000)
       }
