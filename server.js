@@ -60,7 +60,7 @@ app.get('/fdj', function (req, res, next) {
 
         lines.map((line) => {
           var splited = line.split(',')
-          console.log('TEST :', splited)
+          console.log('TEST :', splited.length)
           if (splited.length > 2) {
             i+=1;
             fs.appendFile("./u.json", JSON.stringify({line}), (err) => {
@@ -90,12 +90,13 @@ app.get('/fdj', function (req, res, next) {
           }
         })
 
-        // setTimeout(() => {
-        //   fs.readFile('./u.json', function (err, data) {
-        //     res.contentType("application/json");
-        //     res.send(data);
-        //   });
-        // }, 2000)
+
+        setTimeout(() => {
+          fs.readFile('./u.json', function (err, data) {
+            res.contentType("application/json");
+            res.send(data);
+          });
+        }, 2000)
 
 
       }
