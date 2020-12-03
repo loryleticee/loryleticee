@@ -58,7 +58,7 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           var splited = line.split(',')
           splited.length > 2 ? tab += ['_-------_']  :tab += [  splited[0] = splited[1] ];
-          fs.writeFile("./u.json", tab, (err) => {
+          fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
             if (err) res.json(err);
           });
         })
