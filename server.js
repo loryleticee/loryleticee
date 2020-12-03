@@ -55,20 +55,25 @@ app.get('/fdj', function (req, res, next) {
       if (line) {
         lines.push(line)
       } else {
-        const datas = async() => {
+        const datas = async () => {
           const b = await lines.map((line) => {
-                  if (/([a-z|_])/.test(line)) {
-                    i += 1;
-                    tab[tab_title[i].name] = line;
-                  } else {
-                    var splited = line.split(',')
-                    tab[tab_title[i].name] += [splited[0], splited[1]]
-                  }
-                  return tab
-                })
+            if (/([a-z|_])/.test(line)) {
+              i += 1;
+              tab[tab_title[i].name] = line;
+            } else {
+              var splited = line.split(',')
+              tab[tab_title[i].name] += [splited[0], splited[1]]
+            }
+
+            return tab
+          })
           return b
         }
-        datas().then(data=> res.send(data))
+        datas().then(data => {
+          if (data.length > 0){
+            res.send(data)
+          }else{datas()}
+        })
       }
     });
   }
