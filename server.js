@@ -50,6 +50,7 @@ app.get('/fdj', function (req, res, next) {
   // Each execution of nextLine will get a following line of text from the input file
   reader.nextLine(function (err, line) {
       if (!err) {
+        console.log(line)
         data = [...data, line]
       }
   });
