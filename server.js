@@ -57,8 +57,7 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           var splited = line.split(',')
           var arrayed = JSON.stringify(splited).replace(']','],')
-          console.log('TEST :',arrayed)
-          fs.appendFile("./u.json", JSON.stringify(arrayed), (err) => {
+          fs.appendFile("./u.json", arrayed, (err) => {
             if (err) res.json(err);
           })
         })
