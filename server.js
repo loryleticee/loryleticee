@@ -58,11 +58,10 @@ app.get('/fdj', function (req, res, next) {
         lines.map((line) => {
           if (/([a-z|_])/.test(line)) {
             tab[tab_title[i].name] = line;
-            console.log('TEST :', tab[tab_title[i].name])
             i += 1;
           } else {
             var splited = line.split(',')
-            tab[tab_title[i].name]+= {'NUMBER': splited[0], 'MOL': splited[1]} ;
+            tab[tab_title[i-1].name]+= {'NUMBER': splited[0], 'MOL': splited[1]} ;
           }
           
         },res.send(tab))
