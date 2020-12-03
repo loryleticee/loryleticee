@@ -45,37 +45,26 @@ app.get('/fdj', function (req, res, next) {
   let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt")
 
   var lines = [];
+  var tab = [];
+  var tab_title = { '0': "MIDI", '1': "SOIR", '2': "MIDI-MONTH", '3': "SOIR-MONTH" }
+
   var reader = new LineReader(PATH);
+  var i = 0;
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
         lines.push(line)
-      }else{
-        ouniN = lines.map((line)=> {
-          let strip = line.replace(' ','')
-          let sansN = strip.replace(/([N])/, '')
-          return sansN;
-        })
-
-        let tab = []
-        tab['number'] = []
-        tab['nbr'] = []
-        tab['matin'] = tab['number'].concat(tab['nbr'])
-
-        ouniN.map((line) =>{
-          if(/([a-z|_])/.test(line)){
-            //
-          }
-          else {
+      } else {
+        lines.map((line) => {
+          if (/([a-z|_])/.test(line)) {
+            tab[tab_title[i]] = [...tab[tab_title[i]], line];
+          } else {
             var splited = line.split(',')
-            
-            tab['number'] = [...tab['number'], splited[0]]
-            tab['nbr'] = [...tab['nbr'], splited[1]]
-            console.log('TEST :',tab)
+            tab[ [ tab_title[i]] [splited[0]] ] = [...tab_title[ [tab_title[i]] [splited[0]] ], splited[1]];
           }
-
+          i += 1;
         })
-        
+
         res.send(tab)
       }
     });
