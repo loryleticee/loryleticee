@@ -59,13 +59,18 @@ app.get('/fdj', function (req, res, next) {
         })
 
         let tab = []
+        tab['number'] = []
+        tab['nbr'] = []
+        tab['matin'] = tab['number'] + tab['nbr']
+
         ouniN.map((line) =>{
           if(/([a-z|_])/.test(line)){
-            tab['0']['title'] = [...tab, line]
+            //
           }
           else {
             var splited = line.split(',')
-            tab['0'][splited[0]] = [...tab, splited[1]]
+            tab['number'] = [...tab['number'], splited[0]]
+            tab['nbr'] = [...tab['nbr'], splited[1]]
           }
         })
         
