@@ -46,47 +46,33 @@ app.get('/fdj', function (req, res, next) {
 
   var lines = [];
   var tab = [];
-  var tab_title = [{ 'name': "MIDI" }, { 'name': "SOIR" }, { 'name': "MIDIMONTH" }, { 'name': "SOIRMONTH" }]
 
   var reader = new LineReader(PATH);
-  var i = -1;
+
   for (let index = 0; index < 285; index++) {
     reader.nextLine(function (err, line) {
       if (line) {
         lines.push(line)
       } else {
 
+        lines.map((line) => {
+          var splited = line.split(',')
+          splited.length > 2 ? tab += ['_-------_']  :tab += [  splited[0] = splited[1] ];
+          fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
+            if (err) res.json(err);
+          });
+        })
 
-
-        
-          lines.map((line) => {
-            //if (/([a-z|_])/.test(line)) {
-              i += 1;
-              //tab[tab_title[i].name] = line;
-
-              fs.writeFile("./u.json", JSON.stringify(line), (err) => {
-                if (err) res.json(err);
-              });
-            //} 
-            // else {
-            //   var splited = line.split(',')
-            //   tab[tab_title[i].name] += [splited[0], splited[1]]
-            //   fs.writeFile("./u.json", JSON.stringify(tab), (err) => {
-            //     if (err) res.json(err);
-            //   });
-            // }
-          })
-        
-
-        
+        setTimeout(() => {
           fs.readFile('./u.json', function (err, data) {
             res.contentType("application/json");
-            res.send(data);
+            res.json(data);
           });
-        
+        }, 2000)
+
 
       }
-    });
+    })
   }
   ///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
