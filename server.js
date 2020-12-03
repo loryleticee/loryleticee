@@ -71,10 +71,7 @@ app.get('/fdj', function (req, res, next) {
         }
 
         datas().then(data => {
-          // if (data.length > 0){
-          //   res.send(data)
-          // }
-          console.log('TEST :', data)
+          res.send(data)
         })
       }
     });
