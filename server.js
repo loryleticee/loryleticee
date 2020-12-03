@@ -59,12 +59,13 @@ app.get('/fdj', function (req, res, next) {
           var splited = line.split(',')
           var arrayed;
           if(i === 284) {
-            arrayed = JSON.stringify(splited).replace(']',']],')
-          } else if(i === 0) {
+            //arrayed = JSON.stringify(splited).replace(']',']],')
+          } else if(i == 0) {
             arrayed = JSON.stringify(splited).replace('[','[[,')
           } else {
             arrayed = JSON.stringify(splited).replace(']','],')
           }
+          break;
           fs.appendFile("./u.json", arrayed, (err) => {
             if (err) res.json(err);
           })
