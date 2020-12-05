@@ -37,42 +37,51 @@ app.get('/', function (req, res, next) {
 
 var LineReader = require('node-line-reader').LineReader;
 const TXT_FILE = "./datas.txt"
+
+var dateObj = new Date()
+var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
+var day = String(dateObj.getUTCDate() + 1);
+var year = String(dateObj.getUTCFullYear());
+
 app.get('/fdj', (req, res, next) => {
   var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-  console.log(ip)
-  if (ip != '127.0.0.1') // exit if it's a particular ip
-    res.end('awa')
-  var dateObj = new Date();
-  var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
-  var day = String(dateObj.getUTCDate()+1);
-  var year = String(dateObj.getUTCFullYear());
+  
+  console.warn(ip,'access API at '+ day +'/'+ month +'/'+ year)
+
+  if (!['62.35.127.203', '46.193.67.137', '80.215.224.40'].includes(ip)){ // exit if it's a particular ip
+    console.warn(ip,'is an unknow IP which try to access API at '+ day +'/'+ month +'/'+ year)
+    res.status(404).json('I dont have that')
+  }
+
   var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
   //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
-  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" +fileStatName)
+  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + fileStatName)
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
-  exec("test -f "+PATH+" && echo ok",(stdout, stderr) =>{
+  exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
     if (!stdout) {
       exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py 0'")
     }
   })
-  
+
   var lines = [];
   var reader_ = new LineReader(PATH);
-  
+
   for (let index = 0; index < 285; index++) {
     reader_.nextLine((err, line) => {
       if (line) {
         var splited = line.split(',')
         var arrayed;
         lines.push(splited)
-        arrayed = JSON.stringify(lines).replace(']', '],').replace(',,',',')
+        arrayed = JSON.stringify(lines).replace(']', '],').replace(',,', ',')
         fs.writeFileSync(TXT_FILE, arrayed, (err) => {
-          if (err) res.json(err);
+          if (err) res.json(err+'an erro while write text for number grid');
+          else {console.log(ip +' write text file')}
         })
-      }else{
+      } else {
         var data = fs.readFileSync(TXT_FILE)
-        res.send(JSON.parse(data));      
+        console.log(ip +' Get text file')
+        res.send(JSON.parse(data));
       }
     })
   }
