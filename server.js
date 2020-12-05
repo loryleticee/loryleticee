@@ -38,6 +38,10 @@ app.get('/', function (req, res, next) {
 var LineReader = require('node-line-reader').LineReader;
 const TXT_FILE = "./datas.txt"
 app.get('/fdj', (req, res, next) => {
+  var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+  console.log(ip)
+  if (ip != '127.0.0.1') // exit if it's a particular ip
+    res.end('awa')
   var dateObj = new Date();
   var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
   var day = String(dateObj.getUTCDate()+1);
