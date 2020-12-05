@@ -1,8 +1,4 @@
-var result =  require('dotenv').config()
-if (result.error) {
-  throw result.error
-}
-console.log(result.parsed)
+var resultEnv =  require('dotenv').config()
 
 const http = require('http');
 const url = require('url');
@@ -16,19 +12,15 @@ const { exec } = require("child_process");
 const { JsxEmit } = require('typescript');
 const readline = require('readline');
 
-const hostname = '0.0.0.0';
-//const hostname = '127.0.0.1';
-const port = 4000;
-
-console.log('TEST :', process.env.TEST)
-
+const hostname = process.env.HOSTNAME;
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
+//GET CURICULUM VITAE
 app.get('/', function (req, res, next) {
-  let datas = fs.readdirSync(__dirname + "/src/assets/img/cv");
+  let datas = fs.readdirSync(__dirname + process.env.DIR_CV);
   let files = []
   for (var file of datas) {
     let name = file.split('.');
@@ -36,7 +28,8 @@ app.get('/', function (req, res, next) {
       files.push([name[0], name[0]])
   }
 
-  const filePath = "/src/assets/img/cv/CV-lory-leticee.pdf";
+  const filePath = process.env.PATH_CV;
+
   fs.readFile(__dirname + filePath, function (err, data) {
     res.contentType("application/pdf");
     res.send(data);
@@ -44,7 +37,7 @@ app.get('/', function (req, res, next) {
 })
 
 var LineReader = require('node-line-reader').LineReader;
-const TXT_FILE = "./datas.txt"
+const TXT_FILE = process.env.TEXT_FILE
 
 var dateObj = new Date()
 var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
@@ -56,19 +49,19 @@ app.get('/fdj', (req, res, next) => {
   
   console.warn(ip,'access API at '+ day +'/'+ month +'/'+ year)
 
-  if (!['62.35.127.203', '46.193.67.137', '80.215.224.40'].includes(ip)){ // exit if it's a particular ip
+  if (!process.env.IP_ALLOWED.includes(ip)){ // exit if it's a particular ip
     console.warn(ip,'is an unknow IP which try to access API at '+ day +'/'+ month +'/'+ year)
     res.status(404).json('I dont have that')
   }
 
   var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
   //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
-  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + fileStatName)
+  let PATH = path.join(__dirname, process.env.PATH_STAT + fileStatName)
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
     if (!stdout) {
-      exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py 0'")
+      exec(process.env.PATH_SCRIPT)
     }
   })
 
@@ -164,6 +157,6 @@ app.get('/fdj', (req, res, next) => {
 //   });
 // })
 
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(process.env.PORT, hostname, () => {
+  console.log(`Server running at http://${hostname}:${process.env.PORT}/`);
 });
