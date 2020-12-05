@@ -1,4 +1,9 @@
-require('dotenv').config()
+var result =  require('dotenv').config()
+if (result.error) {
+  throw result.error
+}
+console.log(result.parsed)
+
 const http = require('http');
 const url = require('url');
 const path = require('path')
@@ -14,6 +19,9 @@ const readline = require('readline');
 const hostname = '0.0.0.0';
 //const hostname = '127.0.0.1';
 const port = 4000;
+
+console.log('TEST :', process.env.test)
+
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
