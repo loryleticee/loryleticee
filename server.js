@@ -9,8 +9,10 @@ var bodyParser = require('body-parser');
 //var nodemailer = require('nodemailer');
 const { exec } = require("child_process");
 const { JsxEmit } = require('typescript');
+const readline = require('readline');
 
 const hostname = '0.0.0.0';
+//const hostname = '127.0.0.1';
 const port = 4000;
 
 var app = express()
@@ -33,55 +35,44 @@ app.get('/', function (req, res, next) {
   });
 })
 
-
 var LineReader = require('node-line-reader').LineReader;
-
-app.get('/fdj', function (req, res, next) {
-  exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
+const TXT_FILE = "./datas.txt"
+app.get('/fdj', (req, res, next) => {
   var dateObj = new Date();
   var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
   var day = String(dateObj.getUTCDate());
   var year = String(dateObj.getUTCFullYear());
+  var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
+  //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
+  let PATH = path.join(__dirname, "/home/ubuntu/gain/logkeno/stats-" +fileStatName)
 
-  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" + (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt")
-
+  //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
+  exec("test -f "+PATH+" && echo ok",(stdout, stderr) =>{
+    if (!stdout) {
+      exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
+    }
+  })
+  
   var lines = [];
-
-  var reader = new LineReader(PATH);
-  var expr = 0
+  var reader_ = new LineReader(PATH);
+  
   for (let index = 0; index < 285; index++) {
-    reader.nextLine(function (err, line) {
+    reader_.nextLine((err, line) => {
       if (line) {
-        lines.push(line)
-      } else {
-        lines.map((line, i) => {
-          console.log('TEST :', line, i)
-          var splited = line.split(',')
-          var arrayed;
-          if(i === 283) {
-            arrayed = JSON.stringify(splited).replace(']',']]')
-          } else if(i == 0) {
-            arrayed = JSON.stringify(splited).replace('[','[[,').replace(']','],')
-          } else {
-            arrayed = JSON.stringify(splited).replace(']','],')
-          }
-          
-          fs.appendFile("./u.json", arrayed, (err) => {
-            if (err) res.json(err);
-          })
+        var splited = line.split(',')
+        var arrayed;
+        lines.push(splited)
+        arrayed = JSON.stringify(lines).replace(']', '],').replace(',,',',')
+        fs.writeFileSync(TXT_FILE, arrayed, (err) => {
+          if (err) res.json(err);
         })
-        setTimeout(() => {
-          fs.readFile('./u.json', function (err, data) {
-            res.contentType("application/json");
-            res.send(data);
-          });
-        }, 1000)
+      }else{
+        var data = fs.readFileSync(TXT_FILE)
+        res.send(JSON.parse(data));      
       }
     })
   }
-  ///res.sendFile(path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-"+(day.length < 2 ? '0'+day :day) +'-'+(month.length < 2 ? '0'+month :month)+'-'+year+".txt"))
 })
-
 
 // app.post('/mail', function (req, res) {
 //   req.on('data', function (chunk) {
