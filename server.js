@@ -40,7 +40,7 @@ const TXT_FILE = "./datas.txt"
 app.get('/fdj', (req, res, next) => {
   var dateObj = new Date();
   var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
-  var day = String(dateObj.getUTCDate());
+  var day = String(dateObj.getUTCDate()+1);
   var year = String(dateObj.getUTCFullYear());
   var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
   //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
@@ -49,7 +49,7 @@ app.get('/fdj', (req, res, next) => {
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f "+PATH+" && echo ok",(stdout, stderr) =>{
     if (!stdout) {
-      exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py'")
+      exec("cd /home/ubuntu/gain && bash -l -c 'sudo python3 /home/ubuntu/gain/keno.py 0'")
     }
   })
   
