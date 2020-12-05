@@ -44,7 +44,7 @@ app.get('/fdj', (req, res, next) => {
   var year = String(dateObj.getUTCFullYear());
   var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
   //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
-  let PATH = path.join(__dirname, "/home/ubuntu/gain/logkeno/stats-" +fileStatName)
+  let PATH = path.join(__dirname, "../../../../home/ubuntu/gain/logkeno/stats-" +fileStatName)
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f "+PATH+" && echo ok",(stdout, stderr) =>{
