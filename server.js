@@ -114,8 +114,8 @@ app.post('/loto', (req, res, next) => {
     let PATH = path.join(__dirname, process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
    
     console.warn('LOTO SCRIPT RUNNING...')
-    console.log('TEST :', process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip)
-    exec(process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip+'"')//+"process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD)
+    console.log('TEST :', process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip+ process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD)
+    exec(process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip+ process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD)
     
     setTimeout(()=>{
       var data = fs.readFileSync(process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
