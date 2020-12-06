@@ -75,7 +75,7 @@ app.get('/keno', (req, res, next) => {
         var arrayed;
         lines.push(splited)
         arrayed = JSON.stringify(lines).replace(']', '],').replace(',,', ',')
-        fs.writeFileSync(TXT_FILE, arrayed, (err) => {
+        fs.writeFileSync(TXT_FILE_KENO, arrayed, (err) => {
           if (err) res.json(err + 'an erro while write text for number grid');
           else { console.log(ip + ' write text file') }
         })
