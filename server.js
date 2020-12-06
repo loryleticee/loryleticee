@@ -107,7 +107,7 @@ app.post('/loto', (req, res, next) => {
 
     var numberAskedNums = 3
     //IF MORE THAN DRAÏ ARGS
-    [num4, num5].map((el) => { el !== '' ? numberAskedNums += 1 : null })
+    new Array(num4, num5).map((el) => { el !== '' ? numberAskedNums += 1 : null })
 
     const ENV = [{},{},{},
       { 'stat': process.env.PATH_STAT_LOTO_3_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_3_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_LOCAL },
