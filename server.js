@@ -57,12 +57,12 @@ app.get('/keno', (req, res, next) => {
   }
 
   let fileStatName = DAY + '-' + MONTH + '-' + YEAR + ".txt"
-  let PATH = process.env.PRE_PATH_LOCAL + process.env.PATH_STAT_KENO_LOCAL + fileStatName
+  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
     if (!stdout) {
-      exec(process.env.PATH_SCRIPT_KENO_LOCAL)
+      exec(process.env.PATH_SCRIPT_KENO_PROD)
     }
   })
 
@@ -110,9 +110,9 @@ app.post('/loto', (req, res, next) => {
     new Array(num4, num5).map((el) => { el !== '' ? numberAskedNums += 1 : null })
 
     const ENV = [{},{},{},
-      { 'stat': process.env.PATH_STAT_LOTO_3_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_3_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_LOCAL },
-      { 'stat': process.env.PATH_STAT_LOTO_4_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_4_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_LOCAL },
-      { 'stat': process.env.PATH_STAT_LOTO_5_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_5_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_LOCAL }
+      { 'stat': process.env.PATH_STAT_LOTO_3_PROD, 'script': process.env.PATH_SCRIPT_LOTO_3_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD },
+      { 'stat': process.env.PATH_STAT_LOTO_4_PROD, 'script': process.env.PATH_SCRIPT_LOTO_4_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_PROD },
+      { 'stat': process.env.PATH_STAT_LOTO_5_PROD, 'script': process.env.PATH_SCRIPT_LOTO_5_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_PROD }
     ]
     console.warn(ip, 'access API [LOTO] at ' + DAY + '/' + MONTH + '/' + YEAR)
 
