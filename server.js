@@ -39,30 +39,30 @@ app.get('/', function (req, res, next) {
 var LineReader = require('node-line-reader').LineReader;
 const TXT_FILE_KENO = process.env.TXT_FILE_KENO
 
-var dateObj = new Date()
-var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
-var day = String(dateObj.getUTCDate() );//+ 1
-var year = String(dateObj.getUTCFullYear());
+const dateObj = new Date()
+var montRaw = String(dateObj.getUTCMonth() + 1);
+const MONTH = (montRaw.length < 2 ? '0' + montRaw : montRaw)
+var dayRaw = String(dateObj.getUTCDate());//+ 1
+const DAY = (dayRaw.length < 2 ? '0' + dayRaw : dayRaw)
+const YEAR = String(dateObj.getUTCFullYear());
 
 app.get('/keno', (req, res, next) => {
-  var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+  let ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 
-  console.warn(ip, 'access API at ' + day + '/' + month + '/' + year)
+  console.warn(ip, 'access API at ' + DAY + '/' + MONTH + '/' + YEAR)
 
   if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
-    console.warn(ip, 'is an unknow IP which try to access API at ' + day + '/' + month + '/' + year)
+    console.warn(ip, 'is an unknow IP which try to access API at ' + DAY + '/' + MONTH + '/' + YEAR)
     res.status(404).json('I dont have that')
   }
 
-  var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
-  //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
-console.log('TEST :', '../../../..'+process.env.PATH_STAT_KENO + fileStatName)
-  let PATH = '../../../..'+process.env.PATH_STAT_KENO + fileStatName
+  let fileStatName = DAY + '-' + MONTH + '-' + YEAR + ".txt"
+  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
     if (!stdout) {
-      exec(process.env.PATH_SCRIPT_KENO)
+      exec(process.env.PATH_SCRIPT_KENO_PROD)
     }
   })
 
@@ -82,7 +82,7 @@ console.log('TEST :', '../../../..'+process.env.PATH_STAT_KENO + fileStatName)
         })
       } else {
         var data = fs.readFileSync(TXT_FILE_KENO)
-        console.log(ip + ' Get text file')
+        console.log(ip + ' Get text [KENO] file')
         res.send(JSON.parse(data));
       }
     })
@@ -94,37 +94,35 @@ console.log('TEST :', '../../../..'+process.env.PATH_STAT_KENO + fileStatName)
 app.post('/loto', (req, res, next) => {
   req.on('data', function (chunk) {
     var result = JSON.parse(chunk);
+    var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+    var ipFormat = ip.replace(/(\.)/g, '')
+
     if (result == undefined) res.send("an error occured when request send", 500)
 
     var num1 = encodeURIComponent(result.num1.toLowerCase())
     var num2 = encodeURIComponent(result.num2.toUpperCase())
     var num3 = encodeURIComponent(result.num3.toLowerCase())
 
-    var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-
-    console.warn(ip, 'access API [LOTO] at ' + day + '/' + month + '/' + year)
+    console.warn(ip, 'access API [LOTO] at ' + DAY + '/' + MONTH + '/' + YEAR)
 
     if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
-      console.warn(ip, 'is an unknow IP which try to access API at ' + day + '/' + month + '/' + year)
+      console.warn(ip, 'is an unknow IP which try to access API at ' + DAY + '/' + MONTH + '/' + YEAR)
       res.status(404).json('I dont have that')
     }
 
-    let day = (day.length < 2 ? '0' + day : day)
-    let month = (month.length < 2 ? '0' + month : month)
-    var fileStatName = day + '-' + month + '-' + year + '-' + ip.replace('.', '') + ".txt"
+    var fileStatName = DAY + '-' + MONTH + '-' + YEAR + '-' + ipFormat + ".txt"
+    let PATH = path.join(__dirname, process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
+   
+    console.warn('LOTO SCRIPT RUNNING...')
 
-    let PATH = path.join(__dirname, process.env.PATH_STAT_LOTO_3 + fileStatName)
-
-    //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
-    exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
-      if (!stdout) {
-        exec(process.env.PATH_SCRIPT_LOTO_3 + ' ' +num1+ ' ' +num2+ ' '+num3+'"')
-      }
-    })
-
-    var data = fs.readFileSync(process.env.PATH_STAT_LOTO_3 + fileStatName)
-    console.log(ip + ' Get text file')
-    res.send(JSON.parse(data));
+    exec(process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip)
+    
+    setTimeout(()=>{
+      var data = fs.readFileSync(process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
+      console.log(ip + ' Get text [LOTO] file ' + data.length + 'octets')
+  
+      res.send(data);
+    }, 2000)  
   })
 })
 
