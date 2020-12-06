@@ -80,7 +80,7 @@ app.get('/keno', (req, res, next) => {
           else { console.log(ip + ' write text file') }
         })
       } else {
-        var data = fs.readFileSync(TXT_FILE)
+        var data = fs.readFileSync(TXT_FILE_KENO)
         console.log(ip + ' Get text file')
         res.send(JSON.parse(data));
       }
