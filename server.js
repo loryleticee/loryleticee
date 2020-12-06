@@ -37,7 +37,7 @@ app.get('/', function (req, res, next) {
 })
 
 var LineReader = require('node-line-reader').LineReader;
-const TXT_FILE_KENO = process.env.TEXT_FILE
+const TXT_FILE_KENO = process.env.TXT_FILE_KENO
 
 var dateObj = new Date()
 var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
