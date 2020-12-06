@@ -1,4 +1,4 @@
-var resultEnv =  require('dotenv').config()
+var resultEnv = require('dotenv').config()
 
 const http = require('http');
 const url = require('url');
@@ -44,13 +44,13 @@ var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
 var day = String(dateObj.getUTCDate() + 1);
 var year = String(dateObj.getUTCFullYear());
 
-app.get('/fdj', (req, res, next) => {
+app.get('/keno', (req, res, next) => {
   var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-  
-  console.warn(ip,'access API at '+ day +'/'+ month +'/'+ year)
 
-  if (!process.env.IP_ALLOWED.includes(ip)){ // exit if it's a particular ip
-    console.warn(ip,'is an unknow IP which try to access API at '+ day +'/'+ month +'/'+ year)
+  console.warn(ip, 'access API at ' + day + '/' + month + '/' + year)
+
+  if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
+    console.warn(ip, 'is an unknow IP which try to access API at ' + day + '/' + month + '/' + year)
     res.status(404).json('I dont have that')
   }
 
@@ -76,16 +76,55 @@ app.get('/fdj', (req, res, next) => {
         lines.push(splited)
         arrayed = JSON.stringify(lines).replace(']', '],').replace(',,', ',')
         fs.writeFileSync(TXT_FILE, arrayed, (err) => {
-          if (err) res.json(err+'an erro while write text for number grid');
-          else {console.log(ip +' write text file')}
+          if (err) res.json(err + 'an erro while write text for number grid');
+          else { console.log(ip + ' write text file') }
         })
       } else {
         var data = fs.readFileSync(TXT_FILE)
-        console.log(ip +' Get text file')
+        console.log(ip + ' Get text file')
         res.send(JSON.parse(data));
       }
     })
   }
+})
+
+//[LOTO 3 INPUT]
+
+app.post('/loto', (req, res, next) => {
+  req.on('data', function (chunk) {
+    var result = JSON.parse(chunk);
+    if (result == undefined) res.send("an error occured when request send", 500)
+
+    var num1 = encodeURIComponent(result.num1.toLowerCase())
+    var num2 = encodeURIComponent(result.num2.toUpperCase())
+    var num3 = encodeURIComponent(result.num3.toLowerCase())
+
+    var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+
+    console.warn(ip, 'access API [LOTO] at ' + day + '/' + month + '/' + year)
+
+    if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
+      console.warn(ip, 'is an unknow IP which try to access API at ' + day + '/' + month + '/' + year)
+      res.status(404).json('I dont have that')
+    }
+
+    let day = (day.length < 2 ? '0' + day : day)
+    let month = (month.length < 2 ? '0' + month : month)
+    var fileStatName = day + '-' + month + '-' + year + '-' + ip.replace('.', '') + ".txt"
+
+    let PATH = path.join(__dirname, process.env.PATH_STAT_KENO + fileStatName)
+
+    //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
+    exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
+      if (!stdout) {
+        exec(process.env.PATH_SCRIPT_LOTO_3 + ' ' +num1+ ' ' +num2+ ' '+num3+'"')
+      }
+    })
+
+    var data = fs.readFileSync(process.env.PATH_STAT_KENO + fileStatName)
+    console.log(ip + ' Get text file')
+    res.send(JSON.parse(data));
+  })
 })
 
 // app.post('/mail', function (req, res) {
