@@ -121,7 +121,7 @@ app.post('/loto', (req, res, next) => {
       res.status(404).json('I dont have that')
     }
 
-    var fileStatName = DAY + '-' + MONTH + '-' + YEAR + '-' + ipFormat + ".txt"
+    var fileStatName = ipFormat + ".txt"
     let PATH = path.join(__dirname, ENV[numberAskedNums].stat + fileStatName)
 
     console.warn('LOTO SCRIPT RUNNING...')
