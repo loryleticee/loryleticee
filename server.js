@@ -41,7 +41,7 @@ const TXT_FILE_KENO = process.env.TEXT_FILE
 
 var dateObj = new Date()
 var month = String(dateObj.getUTCMonth() + 1); //months from 1-12
-var day = String(dateObj.getUTCDate() + 1);
+var day = String(dateObj.getUTCDate() );//+ 1
 var year = String(dateObj.getUTCFullYear());
 
 app.get('/keno', (req, res, next) => {
