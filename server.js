@@ -112,7 +112,7 @@ app.post('/loto', (req, res, next) => {
     let month = (month.length < 2 ? '0' + month : month)
     var fileStatName = day + '-' + month + '-' + year + '-' + ip.replace('.', '') + ".txt"
 
-    let PATH = path.join(__dirname, process.env.PATH_STAT_KENO + fileStatName)
+    let PATH = path.join(__dirname, process.env.PATH_STAT_LOTO_3 + fileStatName)
 
     //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
     exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
@@ -121,7 +121,7 @@ app.post('/loto', (req, res, next) => {
       }
     })
 
-    var data = fs.readFileSync(process.env.PATH_STAT_KENO + fileStatName)
+    var data = fs.readFileSync(process.env.PATH_STAT_LOTO_3 + fileStatName)
     console.log(ip + ' Get text file')
     res.send(JSON.parse(data));
   })
