@@ -55,8 +55,8 @@ app.get('/keno', (req, res, next) => {
   }
 
   var fileStatName = (day.length < 2 ? '0' + day : day) + '-' + (month.length < 2 ? '0' + month : month) + '-' + year + ".txt"
-  console.log('TEST :', fileStatName)
   //let PATH = path.join(__dirname, "../fdj/gain/logkeno/stats-" +fileStatName )
+console.log('TEST :', __dirname, process.env.PATH_STAT_KENO + fileStatName)
   let PATH = path.join(__dirname, process.env.PATH_STAT_KENO + fileStatName)
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
