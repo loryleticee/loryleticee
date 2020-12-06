@@ -57,12 +57,12 @@ app.get('/keno', (req, res, next) => {
   }
 
   let fileStatName = DAY + '-' + MONTH + '-' + YEAR + ".txt"
-  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName
+  let PATH = process.env.PRE_PATH_LOCAL + process.env.PATH_STAT_KENO_LOCAL + fileStatName
 
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
     if (!stdout) {
-      exec(process.env.PATH_SCRIPT_KENO_PROD)
+      exec(process.env.PATH_SCRIPT_KENO_LOCAL)
     }
   })
 
@@ -102,7 +102,18 @@ app.post('/loto', (req, res, next) => {
     var num1 = encodeURIComponent(result.num1.toLowerCase())
     var num2 = encodeURIComponent(result.num2.toUpperCase())
     var num3 = encodeURIComponent(result.num3.toLowerCase())
+    var num4 = encodeURIComponent(result.num4.toLowerCase())
+    var num5 = encodeURIComponent(result.num5.toUpperCase())
 
+    var numberAskedNums = 3
+    //IF MORE THAN DRAÏ ARGS
+    [num4, num5].map((el) => { el !== '' ? numberAskedNums += 1 : null })
+
+    const ENV = [{},{},{},
+      { 'stat': process.env.PATH_STAT_LOTO_3_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_3_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_LOCAL },
+      { 'stat': process.env.PATH_STAT_LOTO_4_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_4_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_LOCAL },
+      { 'stat': process.env.PATH_STAT_LOTO_5_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_5_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_LOCAL }
+    ]
     console.warn(ip, 'access API [LOTO] at ' + DAY + '/' + MONTH + '/' + YEAR)
 
     if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
@@ -111,18 +122,18 @@ app.post('/loto', (req, res, next) => {
     }
 
     var fileStatName = DAY + '-' + MONTH + '-' + YEAR + '-' + ipFormat + ".txt"
-    let PATH = path.join(__dirname, process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
-   
+    let PATH = path.join(__dirname, ENV[numberAskedNums].stat + fileStatName)
+
     console.warn('LOTO SCRIPT RUNNING...')
-    console.log('TEST :', process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip+ process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD)
-    exec(process.env.PATH_SCRIPT_LOTO_3_PROD + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + ip+ process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD)
-    
-    setTimeout(()=>{
-      var data = fs.readFileSync(process.env.PATH_STAT_LOTO_3_PROD + fileStatName)
+    console.log('TEST :', ENV[numberAskedNums].script + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + num4 + ' ' + num5 + ' ' + ip + ENV[numberAskedNums].suffix)
+    exec(ENV[numberAskedNums].script + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + num4 + ' ' + num5 + ' ' + ip + ENV[numberAskedNums].suffix)
+
+    setTimeout(() => {
+      var data = fs.readFileSync(ENV[numberAskedNums].stat + fileStatName)
       console.log(ip + ' Get text [LOTO] file ' + data.length + 'octets')
-  
+
       res.send(data);
-    }, 2000)  
+    }, 2000)
   })
 })
 
