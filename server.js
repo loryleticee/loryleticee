@@ -41,7 +41,7 @@ app.get('/', function (req, res, next) {
 
 app.get('/keno', (req, res, next) => {
   let fileStatName = `${DATE().DAY}-${DATE().MONTH}-${DATE().YEAR}.txt`;
-  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName;
+  let PATH = process.env.PRE_PATH_LOCAL + process.env.PATH_STAT_KENO_LOCAL + fileStatName;
   
   if (!IsValidIp(req, DATE())) {
     console.warn(`[UNKNOW IP]`);
@@ -66,7 +66,7 @@ app.get('/keno', (req, res, next) => {
         })
       } else {
         var data = fs.readFileSync(TXT_FILE_KENO)
-        console.log(`${ip} Get [KENO] File`)
+        console.log(`${Ip(req)} Get [KENO] File`)
         res.send(JSON.parse(data));
       }
     })
@@ -95,9 +95,9 @@ app.post('/loto', (req, res, next) => {
     new Array(num4, num5).map((el) => { el !== '' ? numberAskedNums += 1 : null })
 
     const ENV = [{}, {}, {},
-    { 'stat': process.env.PATH_STAT_LOTO_3_PROD, 'script': process.env.PATH_SCRIPT_LOTO_3_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD },
-    { 'stat': process.env.PATH_STAT_LOTO_4_PROD, 'script': process.env.PATH_SCRIPT_LOTO_4_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_PROD },
-    { 'stat': process.env.PATH_STAT_LOTO_5_PROD, 'script': process.env.PATH_SCRIPT_LOTO_5_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_PROD }
+    { 'stat': process.env.PATH_STAT_LOTO_3_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_3_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_LOCAL },
+    { 'stat': process.env.PATH_STAT_LOTO_4_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_4_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_LOCAL },
+    { 'stat': process.env.PATH_STAT_LOTO_5_LOCAL, 'script': process.env.PATH_SCRIPT_LOTO_5_LOCAL, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_LOCAL }
     ]
 
     let PATH = path.join(__dirname, ENV[numberAskedNums].stat + fileStatName)
