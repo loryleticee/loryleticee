@@ -1,71 +1,55 @@
+"use strict";
+
 var resultEnv = require('dotenv').config()
 
-const http = require('http');
-const url = require('url');
+//const http = require('http');
+//const url = require('url');
 const path = require('path')
+const { exec } = require("child_process");
+const hostname = process.env.HOSTNAME;
+const TXT_FILE_KENO = process.env.TXT_FILE_KENO
+
+//var nodemailer = require('nodemailer');
 var fs = require("fs");
 var cors = require('cors');
 var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
-//var nodemailer = require('nodemailer');
-const { exec } = require("child_process");
-const { JsxEmit } = require('typescript');
-const readline = require('readline');
 
-const hostname = process.env.HOSTNAME;
-
-var app = express()
+//APP INIT 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors());
+
+//READER
+var LineReader = require('node-line-reader').LineReader;
+
+//MODULES
+const {PushCv} = require('./pushCv');
+const {IsValidIp, Ip} = require('./isValidIp');
+const {Python} = require('./python.js');
+const {DATE} = require('./date.js');
 
 //GET CURICULUM VITAE
 app.get('/', function (req, res, next) {
-  let datas = fs.readdirSync(__dirname + process.env.DIR_CV);
-  let files = []
-  for (var file of datas) {
-    let name = file.split('.');
-    if (name[1] === 'pdf')
-      files.push([name[0], name[0]])
-  }
-
-  const filePath = process.env.PATH_CV;
-
-  fs.readFile(__dirname + filePath, function (err, data) {
+  const pathFile = PushCv();
+  if (!pathFile) {res.end('No file found');}
+  fs.readFile(__dirname + pathFile, function (err, data) {
     res.contentType("application/pdf");
     res.send(data);
   });
 })
 
-var LineReader = require('node-line-reader').LineReader;
-const TXT_FILE_KENO = process.env.TXT_FILE_KENO
-
-const dateObj = new Date()
-var montRaw = String(dateObj.getUTCMonth() + 1);
-const MONTH = (montRaw.length < 2 ? '0' + montRaw : montRaw)
-var dayRaw = String(dateObj.getUTCDate());//+ 1
-const DAY = (dayRaw.length < 2 ? '0' + dayRaw : dayRaw)
-const YEAR = String(dateObj.getUTCFullYear());
-
 app.get('/keno', (req, res, next) => {
-  let ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-
-  console.warn(ip, 'access API at ' + DAY + '/' + MONTH + '/' + YEAR)
-
-  if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
-    console.warn(ip, 'is an unknow IP which try to access API at ' + DAY + '/' + MONTH + '/' + YEAR)
-    res.status(404).json('I dont have that')
+  let fileStatName = `${DATE().DAY}-${DATE().MONTH}-${DATE().YEAR}.txt`;
+  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName;
+  
+  if (!IsValidIp(req, DATE())) {
+    console.warn(`[UNKNOW IP]`);
+    res.status(404).json('I d\'ont have that');
   }
 
-  let fileStatName = DAY + '-' + MONTH + '-' + YEAR + ".txt"
-  let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName
-
-  //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
-  exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
-    if (!stdout) {
-      exec(process.env.PATH_SCRIPT_KENO_PROD)
-    }
-  })
-
+  !Python(PATH) ? console.warn(`[UNKNOW IP]`) : console.log(`[OK PYTHON]`);
+ 
   var lines = [];
   var reader_ = new LineReader(PATH);
 
@@ -82,7 +66,7 @@ app.get('/keno', (req, res, next) => {
         })
       } else {
         var data = fs.readFileSync(TXT_FILE_KENO)
-        console.log(ip + ' Get text [KENO] file')
+        console.log(`${ip} Get [KENO] File`)
         res.send(JSON.parse(data));
       }
     })
@@ -93,44 +77,43 @@ app.get('/keno', (req, res, next) => {
 
 app.post('/loto', (req, res, next) => {
   req.on('data', function (chunk) {
-    var result = JSON.parse(chunk);
-    var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-    var ipFormat = ip.replace(/(\.)/g, '')
-
+    let result = JSON.parse(chunk);
     if (result == undefined) res.send("an error occured when request send", 500)
 
-    var num1 = encodeURIComponent(result.num1.toLowerCase())
-    var num2 = encodeURIComponent(result.num2.toUpperCase())
-    var num3 = encodeURIComponent(result.num3.toLowerCase())
-    var num4 = encodeURIComponent(result.num4.toLowerCase())
-    var num5 = encodeURIComponent(result.num5.toUpperCase())
+    let ip = Ip(req);
+    var ipFormat = ip.replace(/(\.)/g, '');
+    var fileStatName = ipFormat + ".txt"
 
-    var numberAskedNums = 3
+    let num1 = encodeURIComponent(result.num1.toLowerCase())
+    let num2 = encodeURIComponent(result.num2.toUpperCase())
+    let num3 = encodeURIComponent(result.num3.toLowerCase())
+    let num4 = encodeURIComponent(result.num4.toLowerCase())
+    let num5 = encodeURIComponent(result.num5.toUpperCase())
+
+    let numberAskedNums = 3
     //IF MORE THAN DRAÏ ARGS
     new Array(num4, num5).map((el) => { el !== '' ? numberAskedNums += 1 : null })
 
-    const ENV = [{},{},{},
-      { 'stat': process.env.PATH_STAT_LOTO_3_PROD, 'script': process.env.PATH_SCRIPT_LOTO_3_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD },
-      { 'stat': process.env.PATH_STAT_LOTO_4_PROD, 'script': process.env.PATH_SCRIPT_LOTO_4_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_PROD },
-      { 'stat': process.env.PATH_STAT_LOTO_5_PROD, 'script': process.env.PATH_SCRIPT_LOTO_5_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_PROD }
+    const ENV = [{}, {}, {},
+    { 'stat': process.env.PATH_STAT_LOTO_3_PROD, 'script': process.env.PATH_SCRIPT_LOTO_3_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_3_PROD },
+    { 'stat': process.env.PATH_STAT_LOTO_4_PROD, 'script': process.env.PATH_SCRIPT_LOTO_4_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_4_PROD },
+    { 'stat': process.env.PATH_STAT_LOTO_5_PROD, 'script': process.env.PATH_SCRIPT_LOTO_5_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_LOTO_5_PROD }
     ]
-    console.warn(ip, 'access API [LOTO] at ' + DAY + '/' + MONTH + '/' + YEAR)
 
-    if (!process.env.IP_ALLOWED.includes(ip)) { // exit if it's a particular ip
-      console.warn(ip, 'is an unknow IP which try to access API at ' + DAY + '/' + MONTH + '/' + YEAR)
-      res.status(404).json('I dont have that')
-    }
-
-    var fileStatName = ipFormat + ".txt"
     let PATH = path.join(__dirname, ENV[numberAskedNums].stat + fileStatName)
+    
+    console.warn(`[LOTO] ${ip} at ${DATE().DAY}/${DATE().MONTH}/${DATE().YEAR}`)
 
-    console.warn('LOTO SCRIPT RUNNING...')
-    console.log('TEST :', ENV[numberAskedNums].script + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + num4 + ' ' + num5 + ' ' + ip + ENV[numberAskedNums].suffix)
+    if (!IsValidIp(req, DATE)) {
+      console.warn(`[UNKNOW IP]`);
+      res.status(404).json('I d\'ont have that');
+    }
+    
     exec(ENV[numberAskedNums].script + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + num4 + ' ' + num5 + ' ' + ip + ENV[numberAskedNums].suffix)
 
     setTimeout(() => {
-      var data = fs.readFileSync(ENV[numberAskedNums].stat + fileStatName)
-      console.log(ip + ' Get text [LOTO] file ' + data.length + 'octets')
+      var data = fs.readFileSync(PATH);
+      console.log(`${ip} Get [LOTO] File ${data.length} octets`);
 
       res.send(data);
     }, 2000)
