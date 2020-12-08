@@ -5,7 +5,7 @@ var fs = require("fs");
 
 const isValidIp = (req, DATE) => {
   let IP = ip(req);
-  console.warn(IP, 'access API at ' + DATE.DAY + '/' + DATE.MONTH + '/' + DATE.YEAR);
+  console.warn(IP, 'access API at ' + DATE().DAY + '/' + DATE().MONTH + '/' + DATE().YEAR);
 
   return !process.env.IP_ALLOWED.includes(IP) ?  false : true;
 }

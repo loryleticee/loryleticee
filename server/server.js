@@ -43,7 +43,7 @@ app.get('/keno', (req, res, next) => {
   let fileStatName = `${DATE().DAY}-${DATE().MONTH}-${DATE().YEAR}.txt`;
   let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName;
   
-  if (!IsValidIp(req, DATE())) {
+  if (!IsValidIp(req, DATE)) {
     console.warn(`[UNKNOW IP]`);
     res.status(404).json('I d\'ont have that');
   }
