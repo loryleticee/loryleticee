@@ -169,7 +169,7 @@ app.post('/euro', (req, res, next) => {
       console.log(`${ip} Get [EUROMILION] File ${data.length} octets`);
 
       res.send(data);
-    }, 2000)
+    }, 4000)
   })
 })
 
