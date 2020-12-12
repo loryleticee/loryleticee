@@ -8,7 +8,7 @@ const python = (PATH) => {
   
   //Test si le fichier eciste si oui renvole strinf 'ok' dans la console(stdout)
   let response = exec("test -f " + PATH + " && echo ok", (stdout, stderr) => {
-    return !stdout ? exec(process.env.PATH_SCRIPT_KENO_LOCAL) : false;
+    return !stdout ? exec(process.env.PATH_SCRIPT_KENO_PROD) : false;
   })
   
   return response;
