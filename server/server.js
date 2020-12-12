@@ -1,7 +1,7 @@
 "use strict";
 
 var resultEnv = require('dotenv').config()
-
+var {arp} = require( '@network-utils/arp-lookup')
 //const http = require('http');
 //const url = require('url');
 const path = require('path')
@@ -43,6 +43,13 @@ app.get('/keno', (req, res, next) => {
   let fileStatName = `${DATE().DAY}-${DATE().MONTH}-${DATE().YEAR}.txt`;
   let PATH = process.env.PRE_PATH_PROD + process.env.PATH_STAT_KENO_PROD + fileStatName;
   
+  // const u = async () => await arp.toMAC(Ip(req))
+  // u.then((e)=>console.log(e))
+  // setTimeout(()=>{
+
+  // }, 4000)
+  // process.abort()
+
   if (!IsValidIp(req, DATE)) {
     console.warn(`[UNKNOW IP]`);
     res.status(404).json('I d\'ont have that');
@@ -109,11 +116,57 @@ app.post('/loto', (req, res, next) => {
       res.status(404).json('I d\'ont have that');
     }
     
-    exec(ENV[numberAskedNums].script + ' ' + num1 + ' ' + num2 + ' ' + num3 + ' ' + num4 + ' ' + num5 + ' ' + ip + ENV[numberAskedNums].suffix)
+    exec( ENV[numberAskedNums].script + ' ' +num1+ ' '+ num2 +' '+num3 +' '+num4+' '+ num5+' '+ ip+' '+ ENV[numberAskedNums].suffix )
 
     setTimeout(() => {
       var data = fs.readFileSync(PATH);
       console.log(`${ip} Get [LOTO] File ${data.length} octets`);
+
+      res.send(data);
+    }, 2000)
+  })
+})
+
+//EUROMILION
+app.post('/euro', (req, res, next) => {
+  req.on('data', function (chunk) {
+    let result = JSON.parse(chunk);
+    if (result == undefined) res.send("an error occured when request send", 500)
+
+    let ip = Ip(req);
+    var ipFormat = ip.replace(/(\.)/g, '');
+    var fileStatName = ipFormat + ".txt"
+
+    let num1 = encodeURIComponent(result.num1.toLowerCase())
+    let num2 = encodeURIComponent(result.num2.toUpperCase())
+    let num3 = encodeURIComponent(result.num3.toLowerCase())
+    let num4 = encodeURIComponent(result.num4.toLowerCase())
+    let num5 = encodeURIComponent(result.num5.toUpperCase())
+
+    let numberAskedNums = 3
+    //IF MORE THAN DRAÏ ARGS
+    new Array(num4, num5).map((el) => { el !== '' ? numberAskedNums += 1 : null })
+
+    const ENV = [{}, {}, {},
+    { 'stat': process.env.PATH_STAT_EURO_3_PROD, 'script': process.env.PATH_SCRIPT_EURO_3_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_EURO_3_PROD },
+    { 'stat': process.env.PATH_STAT_EURO_4_PROD, 'script': process.env.PATH_SCRIPT_EURO_4_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_EURO_4_PROD },
+    { 'stat': process.env.PATH_STAT_EURO_5_PROD, 'script': process.env.PATH_SCRIPT_EURO_5_PROD, 'suffix': process.env.SUFFIX_PATH_SCRIPT_EURO_5_PROD }
+    ]
+
+    let PATH = path.join(__dirname, ENV[numberAskedNums].stat + fileStatName)
+    
+    console.warn(`[EUROMILION] ${ip} at ${DATE().DAY}/${DATE().MONTH}/${DATE().YEAR}`)
+
+    if (!IsValidIp(req, DATE)) {
+      console.warn(`[UNKNOW IP]`);
+      res.status(404).json('I d\'ont have that');
+    }
+    
+    exec(ENV[numberAskedNums].script+(` ${num1} ${num2} ${num3} ${num4} ${num5} ${ip} ENV[numberAskedNums].suffix`));
+
+    setTimeout(() => {
+      var data = fs.readFileSync(PATH);
+      console.log(`${ip} Get [EUROMILION] File ${data.length} octets`);
 
       res.send(data);
     }, 2000)

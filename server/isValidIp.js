@@ -14,7 +14,6 @@ const ip = (req) => {
   return req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 }
 
-
 module.exports = {
   IsValidIp:isValidIp,
   Ip:ip
