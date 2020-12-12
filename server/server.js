@@ -161,8 +161,8 @@ app.post('/euro', (req, res, next) => {
       console.warn(`[UNKNOW IP]`);
       res.status(404).json('I d\'ont have that');
     }
-    console.log(ENV[numberAskedNums].script+(` ${num1} ${num2} ${num3} ${num4} ${num5} ${ip} ENV[numberAskedNums].suffix`))
-    exec(ENV[numberAskedNums].script+(` ${num1} ${num2} ${num3} ${num4} ${num5} ${ip} ENV[numberAskedNums].suffix`));
+    console.log(ENV[numberAskedNums].script+(` ${num1} ${num2} ${num3} ${num4} ${num5} ${ip} ${ENV[numberAskedNums].suffix}`))
+    exec(ENV[numberAskedNums].script+(` ${num1} ${num2} ${num3} ${num4} ${num5} ${ip} ${ENV[numberAskedNums].suffix}`));
 
     setTimeout(() => {
       var data = fs.readFileSync(PATH);
